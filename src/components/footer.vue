@@ -41,12 +41,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.footer {
-    width: 100%;
-    height: 222px;
-    background: url('./../assets/images/footer-bg.png') center no-repeat;
-    background-size: 100% 100%;
-}
 .footer-box {
     width: 1200px;
     height: 182px;

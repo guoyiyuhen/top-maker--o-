@@ -1,7 +1,6 @@
 <template>
     <div class="mheader">
-        <img src="./../../assets/m-home/daohangtiao.png" @click="menuShow" alt="" >
-        <img src="./../../assets/m-home/logo.png" @click="toHome" alt="">
+
     </div>
 </template>
 

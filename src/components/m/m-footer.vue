@@ -1,7 +1,6 @@
 <template>
     <div class="mfooter">
         <div class="mfooter-box">
-            <img src="./../../assets/m-home/erweima.png" class="mfooter-erweima" alt="">
             <p>长按/截图保存小程序二维码</p>
             <p>打开微信“扫一扫”，体验更多功能</p>
             <p>地址：北京市海淀区上地六街28号2号楼2层202</p>
@@ -40,14 +39,6 @@ export default {
     .mfooter-erweima {
         width: 2.82rem;
         height: 2.82rem;
-    }
-    .mfooter-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: .5rem;
-        background: url('./../../assets/m-home/dibeijing.png') center no-repeat;
-        background-size: 100% 100%;
     }
     .mfooter-box p {
         color: #fefefe;

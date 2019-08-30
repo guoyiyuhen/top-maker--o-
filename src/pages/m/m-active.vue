@@ -88,17 +88,6 @@ export default {
 .mactive {
     background: #eee;
 }
-.mactive-banner {
-    width: 100%;
-    height: 2.4rem;
-    background: url(./../../assets/m-active/mactive1.png) center no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    justify-content: center;
-    align-items: center;
-}
 .mactive-banner h1 {
     font-size: .5rem;
 }

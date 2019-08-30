@@ -105,17 +105,6 @@ export default {
 .mpd-body div:nth-child(2) img {
     width: 100%;
 }
-.mproduct-banner {
-    width: 100%;
-    height: 2.4rem;
-    background: url(./../../assets/m-product/mproduct1.png) center no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    justify-content: center;
-    align-items: center;
-}
 .mproduct-banner h1 {
     font-size: .5rem;
 }
@@ -172,18 +161,5 @@ export default {
 .mpd-menu ul .mpd-menu-active {
     background: #0055d3;
     color: #fff;
-}
-.mpd-return-top {
-    position: fixed;
-    right: .3rem;
-    bottom: 9rem;
-    width: .8rem;
-    height: .86rem;
-    background: url('./../../assets/active/active2.png') center no-repeat;
-    background-size: 100% 100%;
-}
-.mpd-return-top:active {
-    background: url('./../../assets/active/active3.png') center no-repeat;
-    background-size: 100% 100%;
 }
 </style>

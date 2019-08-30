@@ -81,17 +81,6 @@ export default {
 .about {
     background: #eee;
 }
-.about-banner {
-    width: 100%;
-    height: 2.4rem;
-    background: url(./../../assets/m-about/mabout1.png) center no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    justify-content: center;
-    align-items: center;
-}
 .about-banner h1 {
     font-size: .5rem;
 }

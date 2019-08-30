@@ -1,18 +1,7 @@
 <template>
     <div class="mmenu">
-        <div class="mmenum-header">
-            <img src="./../../assets/m-home/mhome1.png" @click="menuClose" alt="" >
-            <img src="./../../assets/m-home/logo.png" alt="">
-        </div>
         <div class="mmenu-list" v-for="(item,index) in menuList" :key="index">
-            <div class="mmenu-box" @click="isOpen(item.isChild,index)">
-                <h1 @click="toPath(item.path, index)" v-if="!item.isChild">{{item.name}}</h1>
-                <h1 v-if="item.isChild">{{item.name}}</h1>
-                <div class="mmenu-box-pos" v-if="item.isChild">
-                    <img src="./../../assets/m-home/mhome3.png" v-show="item.isOpen" alt="" >
-                    <img src="./../../assets/m-home/mhome2.png" v-show="!item.isOpen" alt="" >
-                </div>
-            </div>
+            
             <div v-if="item.isChild" class="mmenu-box-child">
                 <div v-for="(child,cidx) in item.children" :key="cidx" v-show="item.isOpen" @click="toPath(child.path, cidx)">
                     <h2>{{child.name}}</h2>

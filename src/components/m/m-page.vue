@@ -124,20 +124,4 @@ export default {
         height: .18rem;
         margin: .06rem;
     }
-    .mpage-box-jiantou div:nth-child(1) {
-        background: url('./../../assets/m-product/mproduct2.png') center no-repeat;
-        background-size: 100% 100%;
-    }
-    .mpage-box-jiantou div:nth-child(2) {
-        background: url('./../../assets/m-product/mproduct4.png') center no-repeat;
-        background-size: 100% 100%;
-    }
-    .mpage-box-jiantou div:nth-child(1):active {
-        background: url('./../../assets/m-product/mproduct3.png') center no-repeat;
-        background-size: 100% 100%;
-    }
-    .mpage-box-jiantou div:nth-child(2):active {
-        background: url('./../../assets/m-product/mproduct5.png') center no-repeat;
-        background-size: 100% 100%;
-    }
 </style>
