@@ -29,8 +29,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
     .footer {
-        height: 65px;
-        padding-top: 80px;
+        height: 75px;
+        padding-top: 70px;
         background-color: #333333;
         .box {
             font-size: 16px;

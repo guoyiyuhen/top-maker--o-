@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from './pages/main.vue';
-import Mmain from './pages/m/m-main.vue';
 Vue.use(Router);
 
 
@@ -15,7 +14,7 @@ const router = new Router({
             component: Main,
             redirect: '/home',
             meta: {
-                title: '首页'
+                title: '精选'
             },
             children: [
                 { 
@@ -23,8 +22,59 @@ const router = new Router({
                     name: 'home',
                     component: () => import('./pages/home.vue'),
                     meta: {
-                        title: '首页'
+                        title: '精选'
                     }
+                },
+                { 
+                    path: '/works',
+                    name: 'works',
+                    component: () => import('./pages/works.vue'),
+                    meta: {
+                        title: '作品'
+                    }
+                },
+                {
+                    path: '/designer',
+                    name: 'designer',
+                    component: () => import('./pages/designer.vue'),
+                    meta: {
+                        title: '设计师'
+                    }
+                },
+                {
+                    path: '/detail',
+                    name: 'detail',
+                    component: () => import('./pages/detail.vue'),
+                    meta: {
+                        title: '作品详情'
+                    }
+                },
+                {
+                    path: '/personal',
+                    name: 'personal',
+                    redirect: '/representative',
+                    component: () => import('./pages/personal.vue'),
+                    meta: {
+                        title: '设计师'
+                    },
+                    children: [
+                        { 
+                            path: '/representative',
+                            name: 'representative',
+                            component: () => import('./pages/representative.vue'),
+                            meta: {
+                                title: '设计师'
+                            }
+                        },
+                        { 
+                            path: '/thumbs',
+                            name: 'thumbs',
+                            component: () => import('./pages/thumbs.vue'),
+                            meta: {
+                                title: '设计师'
+                            }
+                        }
+                    ]
                 }
             ]
         },

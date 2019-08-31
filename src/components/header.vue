@@ -37,22 +37,35 @@ export default {
         }
     },
     mounted() {
-        this.activeName = this.$route.path.split('/')[1];
+            if (this.$route.path.split('/')[1] === 'representative' || this.$route.path.split('/')[1] === 'thumbs') {
+                this.activeName = 'designer';
+                return;
+            }
+            if (this.$route.path.split('/')[1] === 'detail') {
+                this.activeName = 'works';
+                return;
+            }
+            this.activeName = this.$route.path.split('/')[1];
     },
     watch: {
         $route(route) {
+            if (route.name === 'representative' || route.name === 'thumbs') {
+                this.activeName = 'designer';
+                return;
+            }
+            if (route.name === 'detail') {
+                this.activeName = 'works';
+                return;
+            }
             this.activeName = route.path.split('/')[1];
         }
     },
     methods: {
-        toHome() {
-            this.$router.push({
-                name: 'home'
-            })
-        },
         changeNav(nav) {
-            console.log(nav)
             this.activeName = nav;
+            this.$router.push({
+                name: nav
+            })
         },
         login(change) {
             this.callBack(true,change);
