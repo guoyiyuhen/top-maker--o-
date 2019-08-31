@@ -1,100 +1,47 @@
 <template>
-    <div class="header" :style="bgcolor">
-        <div class="header-box">
-            <img class="header-logo" src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/images/header-logo.png" alt="" @click="toHome">
-            <ul class="header-nav">
-                <router-link v-for="(item,idx) in menu" :key="idx" class="routelink" :to="'/' + item.path"><li :class="activeName === item.path ? 'active' : ''">{{item.name}}</li></router-link>
-            </ul>
+    <div class="header">
+        <div class="box">
+            <div class="box-left">
+                <img src="./../assets/image/logo_dengluye@2x.png" alt="">
+            </div>
+            <div class="box-right">
+                <ul class="nav">
+                    <li :class="item.active == activeName ? 'active' : ''" v-for="(item,index) in menu" :key="index" @click="changeNav(item.active)">{{item.name}}</li>
+                </ul>
+                <div class="login">
+                    <!-- <img src="./../assets/image/sousuo@2x.png" alt=""> -->
+                    <span @click="login(true)">登陆</span>
+                    <span @click="login(false)">注册</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    props:['callBack'],
     data() {
         return {
-            activeName: '',
-            bgcolor: 'background: rgba(0,25,60, .7);',
             menu: [{
-                name: '首页',
-                path: 'home'
+                name: '精选',
+                active: 'home'
             },{
-                name: '仿真产品',
-                path: 'product'
+                name: '作品',
+                active: 'works'
             },{
-                name: '解决方案',
-                path: 'solution'
-            },{
-                name: '仿真软件',
-                path: 'simulation'
-            },{
-                name: '下载',
-                path: 'download'
-            },{
-                name: '关于我们',
-                path: 'about'
-            }]
+                name: '设计师',
+                active: 'designer'
+            }],
+            activeName: 'home'
         }
     },
     mounted() {
-        let activeName = this.$route.path.split('/')[1];
-        switch(activeName) {
-            case 'culture': this.activeName = 'about';
-                break;
-            case 'partner': this.activeName = 'about';
-                break;
-            case 'qualifications': this.activeName = 'about';
-                break;
-            case 'recruit': this.activeName = 'about';
-                break;
-            case 'glory': this.activeName = 'about';
-                break;
-            case 'aboutchild': this.activeName = 'about';
-                break;
-            default:
-                this.activeName = this.$route.path.split('/')[1];
-        }
+        this.activeName = this.$route.path.split('/')[1];
     },
     watch: {
         $route(route) {
-            let activeName = route.path.split('/')[1];
-            switch(activeName) {
-                case 'culture': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'partner': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'qualifications': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'recruit': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'glory': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'aboutchild': this.activeName = 'about';
-                    this.bgcolor = 'background: rgba(0,29,78, .7);';
-                    break;
-                case 'home': this.activeName = 'home';
-                    this.bgcolor = 'background: rgba(18,16,20, .7);';
-                    break;
-                case 'download': this.activeName = 'download';
-                    this.bgcolor = 'background: rgba(0,19,48, .7);';
-                    break;
-                case 'product': this.activeName = 'product';
-                    this.bgcolor = 'background: rgba(25,37,51, .7);';
-                    break;
-                case 'simulation': this.activeName = 'simulation';
-                    this.bgcolor = 'background: rgba(0,25,60, .7);';
-                    break;
-                case 'solution': this.activeName = 'solution';
-                    this.bgcolor = 'background: rgba(0,33,59, .7);';
-                    break;
-                default:
-                    this.activeName = route.path.split('/')[1];
-            }
+            this.activeName = route.path.split('/')[1];
         }
     },
     methods: {
@@ -102,6 +49,13 @@ export default {
             this.$router.push({
                 name: 'home'
             })
+        },
+        changeNav(nav) {
+            console.log(nav)
+            this.activeName = nav;
+        },
+        login(change) {
+            this.callBack(true,change);
         }
     }
     
@@ -109,49 +63,67 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .header {
     width: 100%;
-    height: 80px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0,25,60, .7);
-    z-index: 1000;
-}
-.header-box {
-    width: 1200px;
-    height: 80px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.header-logo {
-    width: 102px;
-    height: 37px;
-    cursor: pointer;
-}
-.header-nav {
-    display: flex;
-}
-.header-nav li {
-    width: 100px;
-    height: 80px;
-    color: #fefefe;
-    line-height: 80px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 16px;
-}
-.header-nav li:hover {
-    background: #0a57f4;
-}
-.header-nav .active {
-    background: #0a57f4;
-}
-.routelink {
-    color: #fefefe;
-    text-decoration: none;
+    height: 67px;
+    background: #fff;
+    .box {
+        height: 67px;
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+        .box-left {
+            float: left;
+            padding-top: 6px;
+            img {
+                width: 43px;
+                height: 56px;
+                cursor: pointer;
+            }
+        }
+        .box-right {
+            float: right;
+        }
+    }
+    .nav {
+        float: left;
+        font-size: 14px;
+        padding-top: 20px;
+        margin-right: 130px;
+        li {
+            float: left;
+            height: 43px;
+            line-height: 43px;
+            padding: 0 5px;
+            margin-right: 46px;
+            border-bottom: 4px solid #fff;
+            cursor: pointer;
+        }
+        .active {
+            border-bottom: 4px solid #000;
+        }
+    }
+    .login {
+        float: left;
+        font-size: 12px;
+        padding-top: 35px;
+        img {
+            display: block;
+            float: left;
+            width:11px;
+            height:12px;
+            margin-right: 15px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        span {
+            display: block;
+            float: left;
+            font-size: 12px;
+            margin-right: 14px;
+            cursor: pointer;
+        }
+    }
 }
 </style>
