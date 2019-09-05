@@ -61,7 +61,6 @@ export default {
       width: 761px;
       padding: 44px;
       background: #ffffff;
-      height: 2000px;
       float: left;
       border-right: 6px solid #fafafa;
     }
