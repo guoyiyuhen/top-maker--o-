@@ -1,5 +1,15 @@
 import axios from 'axios'
 import qs from 'qs'
+axios.interceptors.request.use(config => {
+    // let token = localStorage.getItem('access_token');
+    let token = 'n4Xm1qU9IjxKtfD3SxLo1pb67rqKxiIk_1567149739';
+    if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+        config.headers.Authorization = 'Bearer ' + token;
+    }
+    return config
+}, error => {
+    return Promise.reject(error)
+})
 
 let request = (option) => {
     let newoption = Object.assign({

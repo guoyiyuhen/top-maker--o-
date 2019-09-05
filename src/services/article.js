@@ -10,18 +10,19 @@ export let timestampToTime = (time) => {
     }
 }
 // 分类
-export let Article = (params = {}, id = -1) => {
-    let url = 'http://api.bernouly.com/api/article';
-    url = id >= 0 ? url + '/' + id : url;
+export let Designer = (params = {}) => {
+    let url = '/api/designer';
     return request({
         url,
         params,
         method: 'get'
     })
 }
-
-export let ArChildren = (params = {}) => {
-    let url = 'http://api.bernouly.com/api/category/children';
+export let Works = (params = {}, id = -1) => {
+    let url = '/api/works';
+    if (id > 0) {
+        url = '/api/works/' + id;
+    }
     return request({
         url,
         params,

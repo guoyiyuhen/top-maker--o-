@@ -41,27 +41,21 @@
             </div>
         </div>
         <div class="list">
-            <div class="box" v-for="(item, index) in 6" :key="index" @click="toPersonal(index)">
+            <div class="box" v-for="(item, index) in list" :key="index" @click="toPersonal(item.id)">
                 <div class="left">
                     <img
-                        src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                        :src="item.avatar"
                         alt=""
                     >
-                    <h2>SPES神鸦社鼓</h2>
-                    <p>标签：摄影</p>
+                    <h2>{{item.name}}</h2>
+                    <p>标签：{{item.tags}}</p>
                 </div>
                 <div class="right">
                     <img
-                        src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                        :src="item2.image"
                         alt=""
-                    >
-                    <img
-                        src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-                        alt=""
-                    >
-                    <img
-                        src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-                        alt=""
+                        v-for="(item2,index2) in item.works"
+                        :key="index2"
                     >
                 </div>
             </div>
@@ -78,6 +72,7 @@
     </div>
 </template>
 <script>
+import { Designer, Works } from "./../services/article";
 export default {
   data() {
     return {
@@ -126,12 +121,17 @@ export default {
         }
       ],
       value: "",
-      value2: ""
+      value2: "",
+      list: []
     };
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    Designer().then(res => {{
+      this.list = res.items;
+    }})
+  },
   methods: {
     selectchange() {
       console.log(this.value, this.value2);

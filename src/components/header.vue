@@ -2,7 +2,7 @@
     <div class="header">
         <div class="box">
             <div class="box-left">
-                <img src="./../assets/image/logo_dengluye@2x.png" alt="">
+                <img src="./../assets/image/logo_dengluye@2x.png" @click="toHome" alt="">
             </div>
             <div class="box-right">
                 <ul class="nav">
@@ -69,6 +69,11 @@ export default {
         },
         login(change) {
             this.callBack(true,change);
+        },
+        toHome() {
+            this.$router.push({
+                name: 'home'
+            })
         }
     }
     

@@ -42,7 +42,7 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/detail',
+                    path: '/detail/:id',
                     name: 'detail',
                     component: () => import('./pages/detail.vue'),
                     meta: {

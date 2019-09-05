@@ -37,25 +37,25 @@
             </div>
         </div>
         <div class="list">
-            <div class="box" v-for="(item,index) in 20" :key="index" @click="toDetail(index)">
+            <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
                 <img
                     class="box-img"
-                    src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                    :src="item.image"
                     alt=""
                 >
                 <div class="bottom">
-                    <h3>小猪佩奇 《Hidden Innocence》</h3>
+                    <h3>{{item.title}}</h3>
                     <div>
                         <img
                             class="img1"
-                            src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                            :src="item.designer.avatar"
                             alt=""
                         >
-                        <span>mos摩森文斯</span>
+                        <span>{{item.designer.name}}</span>
                         <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
-                        <span>10000</span>
+                        <span>{{item.favor_nums}}</span>
                         <img class="img3" src="./../assets/image/yanjing.png" alt="">
-                        <span>10000</span>
+                        <span>{{item.views}}</span>
                     </div>
                 </div>
             </div>
@@ -72,6 +72,7 @@
     </div>
 </template>
 <script>
+import { Works } from "./../services/article";
 export default {
   data() {
     return {
@@ -120,12 +121,17 @@ export default {
         }
       ],
       value: "",
-      value2: ""
+      value2: "",
+      list: []
     };
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    Works().then(res => {{
+      this.list = res.items;
+    }})
+  },
   methods: {
     selectchange() {
       console.log(this.value, this.value2);

@@ -1,23 +1,23 @@
 <template>
     <div class="detail">
         <div class="box">
-            <div class="left"></div>
+            <div class="left" v-html="content"></div>
             <div class="right">
                 <img
                     class="detail-head"
-                    src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                    :src="designer.avatar"
                     alt=""
                 >
-                <h2>子意</h2>
-                <p>标签：摄影、风景、人物</p>
+                <h2>{{designer.name}}</h2>
+                <p>标签：{{designer.tags}}</p>
                 <div class="follow">
                     <div class="left-c">
                         <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
-                        <span>10000</span>
+                        <span>{{favor}}</span>
                     </div>
                     <div class="right-c">
                         <img class="list-head" src="./../assets/image/yanjing.png" alt="">
-                        <span>10000</span>
+                        <span>{{views}}</span>
                     </div>
                 </div>
             </div>
@@ -25,13 +25,26 @@
     </div>
 </template>
 <script>
+import { Works } from "./../services/article";
 export default {
   data() {
-    return {};
+    return {
+      content: '',
+      designer: {},
+      favor: 0,
+      views: 0
+    };
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    Works({}, this.$route.params.id).then(res => {{
+      this.content = res.content;
+      this.designer = res.designer;
+      this.favor = res.favor_nums;
+      this.views = res.views;
+    }})
+  },
   methods: {}
 };
 </script>

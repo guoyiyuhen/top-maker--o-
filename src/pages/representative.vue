@@ -1,9 +1,9 @@
 <template>
     <div class="representative">
         <div class="content" v-if="isListShow">
-            <div class="button">
+            <!-- <div class="button">
                 <div>上传作品</div>
-            </div>
+            </div> -->
             <div class="list">
                 <div class="box" v-for="(item,index) in 20" :key="index" @click="toDetail(index)">
                     <img
@@ -41,7 +41,7 @@
             <div v-else class="noList">
       <img src="./../assets/image/zanwudianzan.png" alt="">
       <h2>暂无作品</h2>
-      <div>去上传作品</div>
+      <!-- <div>去上传作品</div> -->
     </div>
     </div>
 </template>

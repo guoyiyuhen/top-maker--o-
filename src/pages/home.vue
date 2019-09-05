@@ -9,32 +9,32 @@
 
 
         <div class="box">
-            <div class="list" v-for="(item,index) in [1,2,3,4,5,6,7]" :key="index" @click="toDetail(index)">
+            <div class="list" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
                 <img
                     class="list-img"
-                    src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                    :src="item.image"
                     alt=""
                 >
                 <div class="list-content">
                     <div class="list-left">
-                        <h2>做含金量最高的摄影培训！右视觉摄影弟子班学生作品</h2>
-                        <p>灵感来源于小灯泡有趣的结构特征。被拉伸的底足，圆润的储存空间都有意放大造型的幽默感。无把手壶身强化了与人更直接的接触，赋予人与器物全新的体验感。</p>
+                        <h2>{{item.title}}</h2>
+                        <p>{{item.brief}}</p>
                     </div>
                     <div class="list-right">
                         <img
                             class="list-head"
-                            src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                            :src="item.designer.avatar"
                             alt=""
                         >
-                        <p>suomudesign</p>
+                        <p>{{item.designer.name}}</p>
                         <div class="follow">
                             <div class="left">
                                 <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
-                                <span>10000</span>
+                                <span>{{item.favor_nums}}</span>
                             </div>
                             <div class="right">
                                 <img class="list-head" src="./../assets/image/yanjing.png" alt="">
-                                <span>10000</span>
+                                <span>{{item.views}}</span>
                             </div>
                         </div>
                     </div>
@@ -44,13 +44,14 @@
     </div>
 </template>
 <script>
-import { Article, timestampToTime } from "./../services/article";
+import { Works } from "./../services/article";
 let timer = null;
 export default {
   components: {},
   data() {
     return {
-      banIdx: 0
+      banIdx: 0,
+      list: []
     };
   },
   watch: {},
@@ -59,15 +60,18 @@ export default {
   },
   mounted() {
     this.imgWidth = window.innerWidth;
+    Works({is_good: 1}).then(res => {{
+      this.list = res.items;
+    }})
   },
   methods: {
     bannertap(item) {
       this.banIdx = item;
       this.left = -item * this.imgWidth;
     },
-    toDetail(i) {
+    toDetail(id) {
         this.$router.push({
-            name: 'detail'
+            path: '/detail/' + id
         })
     }
   }
