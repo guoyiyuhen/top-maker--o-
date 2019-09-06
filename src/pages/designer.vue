@@ -1,148 +1,129 @@
 <template>
-    <div class="designer">
-        <el-carousel height="496px">
-            <el-carousel-item v-for="item in 4" :key="item">
-                <h3>{{ item }}</h3>
-            </el-carousel-item>
-        </el-carousel>
-        <div class="cascader">
-            <h2>筛选：</h2>
-            <div>
-                <el-select
-                    v-model="value"
-                    clearable
-                    @change="selectchange"
-                    placeholder="请选择"
-                    size="small"
-                >
-                    <el-option
-                        v-for="item in options1"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </div>
-            <div>
-                <el-select
-                    v-model="value2"
-                    clearable
-                    @change="selectchange"
-                    placeholder="请选择"
-                    size="small"
-                >
-                    <el-option
-                        v-for="item in options2"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </div>
-        </div>
-        <div class="list">
-            <div class="box" v-for="(item, index) in list" :key="index" @click="toPersonal(item.id)">
-                <div class="left">
-                    <img
-                        :src="item.avatar"
-                        alt=""
-                    >
-                    <h2>{{item.name}}</h2>
-                    <p>标签：{{item.tags}}</p>
-                </div>
-                <div class="right">
-                    <img
-                        :src="item2.image"
-                        alt=""
-                        v-for="(item2,index2) in item.works"
-                        :key="index2"
-                    >
-                </div>
-            </div>
-        </div>
-        <div class="page-box">
-            <el-pagination
-                background=""
-                layout="prev, pager, next"
-                @current-change="currentChange"
-                :page-size="6"
-                :total="1000"
-            ></el-pagination>
-        </div>
+  <div class="designer">
+    <el-carousel height="496px">
+      <el-carousel-item v-for="item in 4" :key="item">
+        <h3>{{ item }}</h3>
+      </el-carousel-item>
+    </el-carousel>
+    <div class="cascader">
+      <h2>筛选：</h2>
+      <div>
+        <el-select v-model="value" clearable @change="selectchange" placeholder="请选择" size="small">
+          <el-option
+            v-for="item in options1"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
+      <div>
+        <el-select v-model="value2" clearable @change="selectchange" placeholder="请选择" size="small">
+          <el-option
+            v-for="item in options2"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
     </div>
+    <div class="list">
+      <div class="box" v-for="(item, index) in list" :key="index" @click="toPersonal(item.id)">
+        <div class="left">
+          <img :src="item.avatar" alt="">
+          <h2>{{item.name}}</h2>
+          <p>标签：{{item.tags}}</p>
+        </div>
+        <div class="right">
+          <img :src="item2.image" alt="" v-for="(item2,index2) in item.works" :key="index2">
+        </div>
+      </div>
+    </div>
+    <div class="page-box">
+      <div class="page-table">
+        <el-pagination
+          background=""
+          layout="prev, pager, next"
+          @current-change="currentChange"
+          :page-size="size"
+          :total="total"
+        ></el-pagination>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import { Designer, Works } from "./../services/article";
+import { Designer, DesignrCategory } from "./../services/article";
 export default {
   data() {
     return {
       options1: [
         {
-          value: "黄金糕",
-          label: "黄金糕"
+          value: "created_at",
+          label: "最新"
         },
         {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
+          value: "favor_nums",
+          label: "最热"
         }
       ],
-      options2: [
-        {
-          value: "黄金糕",
-          label: "黄金糕"
-        },
-        {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
-        }
-      ],
+      options2: [],
       value: "",
       value2: "",
-      list: []
+      list: [],
+      page: 1,
+      total: 0,
+      size: 6
     };
   },
   watch: {},
   created() {},
   mounted() {
-    Designer().then(res => {{
-      this.list = res.items;
-    }})
+    DesignrCategory().then(res => {
+      let options2 = [];
+      res.items.forEach(item => {
+        let obj = {
+          value: item.id,
+          label: item.name
+        };
+        options2.push(obj);
+      });
+      this.options2 = options2;
+    });
+    this.getList();
   },
   methods: {
+    getList() {
+      let params = {
+        page: this.page,
+        page_size: this.size
+      };
+      if (this.value !== "") {
+        params.sort_name = this.value;
+        params.sort_val = 4;
+      }
+      if (this.value2 !== "") {
+        params.category_id = this.value2;
+      }
+      Designer(params).then(res => {
+        {
+          this.list = res.items;
+          this.total = res._meta.totalCount;
+        }
+      });
+    },
     selectchange() {
-      console.log(this.value, this.value2);
+      this.getList();
     },
     currentChange(page) {
-      console.log(page);
+      this.page = page;
+      this.getList(this.page);
     },
-    toPersonal(i) {
-        this.$router.push({
-            name: 'personal'
-        })
+    toPersonal(id) {
+      this.$router.push({
+        path: "/personal/" + id
+      });
     }
   }
 };
@@ -151,8 +132,14 @@ export default {
 .designer {
   background: #fbfbfb;
   .page-box {
-    width: 402px;
-    margin: 90px auto;
+    display: table;
+    width: 100%;
+    padding: 90px 0;
+    .page-table {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
   }
   .el-carousel__item h3 {
     color: #475669;
@@ -214,16 +201,16 @@ export default {
           margin-left: 79px;
         }
         h2 {
-            margin-bottom: 23px;
-            color: #3E3A39;
-            font-size: 17px;
-            font-weight: bold;
-            text-align: center;
+          margin-bottom: 23px;
+          color: #3e3a39;
+          font-size: 17px;
+          font-weight: bold;
+          text-align: center;
         }
         p {
-            color: #367CC1;
-            font-size: 13px;
-            text-align: center;
+          color: #367cc1;
+          font-size: 13px;
+          text-align: center;
         }
       }
       .right {

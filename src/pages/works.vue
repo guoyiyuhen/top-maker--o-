@@ -1,148 +1,129 @@
 <template>
-    <div class="works">
-        <img class="ad" src="./../assets/image/bannertiao@2x.png" alt="">
-        <div class="cascader">
-            <h2>筛选：</h2>
-            <div>
-                <el-select
-                    v-model="value"
-                    clearable
-                    @change="selectchange"
-                    placeholder="请选择"
-                    size="small"
-                >
-                    <el-option
-                        v-for="item in options1"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </div>
-            <div>
-                <el-select
-                    v-model="value2"
-                    clearable
-                    @change="selectchange"
-                    placeholder="请选择"
-                    size="small"
-                >
-                    <el-option
-                        v-for="item in options2"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </div>
-        </div>
-        <div class="list">
-            <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
-                <img
-                    class="box-img"
-                    :src="item.image"
-                    alt=""
-                >
-                <div class="bottom">
-                    <h3>{{item.title}}</h3>
-                    <div>
-                        <img
-                            class="img1"
-                            :src="item.designer.avatar"
-                            alt=""
-                        >
-                        <span>{{item.designer.name}}</span>
-                        <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
-                        <span>{{item.favor_nums}}</span>
-                        <img class="img3" src="./../assets/image/yanjing.png" alt="">
-                        <span>{{item.views}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page-box">
-            <el-pagination
-                background=""
-                layout="prev, pager, next"
-                @current-change="currentChange"
-                :page-size="28"
-                :total="1000"
-            ></el-pagination>
-        </div>
+  <div class="works">
+    <img class="ad" src="./../assets/image/bannertiao@2x.png" alt="">
+    <div class="cascader">
+      <h2>筛选：</h2>
+      <div>
+        <el-select v-model="value" clearable @change="selectchange" placeholder="请选择" size="small">
+          <el-option
+            v-for="item in options1"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
+      <div>
+        <el-select v-model="value2" clearable @change="selectchange" placeholder="请选择" size="small">
+          <el-option
+            v-for="item in options2"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
     </div>
+    <div class="list">
+      <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
+        <img class="box-img" :src="item.image" alt="">
+        <div class="bottom">
+          <h3>{{item.title}}</h3>
+          <div>
+            <img class="img1" :src="item.designer.avatar" alt="">
+            <span>{{item.designer.name}}</span>
+            <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
+            <span>{{item.favor_nums}}</span>
+            <img class="img3" src="./../assets/image/yanjing.png" alt="">
+            <span>{{item.views}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-box">
+      <div class="page-table">
+        <el-pagination
+          background=""
+          layout="prev, pager, next"
+          @current-change="currentChange"
+          :page-size="size"
+          :total="total"
+        ></el-pagination>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import { Works } from "./../services/article";
+import { Works, Category } from "./../services/article";
 export default {
   data() {
     return {
       options1: [
         {
-          value: "黄金糕",
-          label: "黄金糕"
+          value: "created_at",
+          label: "最新"
         },
         {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
+          value: "favor_nums",
+          label: "最热"
         }
       ],
-      options2: [
-        {
-          value: "黄金糕",
-          label: "黄金糕"
-        },
-        {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
-        }
-      ],
+      options2: [],
       value: "",
       value2: "",
-      list: []
+      list: [],
+      page: 1,
+      total: 0,
+      size: 28
     };
   },
   watch: {},
   created() {},
   mounted() {
-    Works().then(res => {{
-      this.list = res.items;
-    }})
+    Category().then(res => {
+      let options2 = [];
+      res.items.forEach(item => {
+        let obj = {
+          value: item.id,
+          label: item.name
+        }
+        options2.push(obj);
+      })
+      this.options2 = options2;
+    });
+    this.getList();
   },
   methods: {
+    getList() {
+      let params = {
+        page: this.page,
+        page_size: this.size
+      };
+      if (this.value !== "") {
+        params.sort_name = this.value;
+        params.sort_val = 4;
+      }
+      if (this.value2 !== "") {
+        params.category_id = this.value2;
+      }
+      Works(params).then(res => {
+        {
+          this.list = res.items;
+          this.total = res._meta.totalCount;
+        }
+      });
+    },
     selectchange() {
-      console.log(this.value, this.value2);
+      this.getList();
     },
     currentChange(page) {
-      console.log(page);
+      this.page = page;
+      this.getList();
     },
-    toDetail(i) {
-        this.$router.push({
-            name: 'detail'
-        })
+    toDetail(id) {
+      this.$router.push({
+        path: "/detail/" + id
+      });
     }
   }
 };
@@ -150,8 +131,14 @@ export default {
 <style lang="scss" scoped>
 .works {
   .page-box {
-    width: 402px;
-    margin: 90px auto;
+    display: table;
+    width: 100%;
+    padding: 90px 0;
+    .page-table {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
   }
   .ad {
     height: 67px;
@@ -180,7 +167,7 @@ export default {
   .list {
     margin: 0 auto;
     margin-top: 50px;
-    margin-bottom: 200px;
+    margin-bottom: 50px;
     width: 1140px;
     overflow: hidden;
     .box {

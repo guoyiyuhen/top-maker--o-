@@ -1,75 +1,92 @@
 <template>
-    <div class="representative">
-        <div class="content" v-if="isListShow">
-            <!-- <div class="button">
+  <div class="representative">
+    <div class="content" v-if="isListShow">
+      <!-- <div class="button">
                 <div>上传作品</div>
-            </div> -->
-            <div class="list">
-                <div class="box" v-for="(item,index) in 20" :key="index" @click="toDetail(index)">
-                    <img
-                        class="box-img"
-                        src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-                        alt=""
-                    >
-                    <div class="bottom">
-                        <h3>小猪佩奇 《Hidden Innocence》</h3>
-                        <div>
-                            <img
-                                class="img1"
-                                src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-                                alt=""
-                            >
-                            <span>mos摩森文斯</span>
-                            <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
-                            <span>10000</span>
-                            <img class="img3" src="./../assets/image/yanjing.png" alt="">
-                            <span>10000</span>
-                        </div>
-                    </div>
-                </div>
+      </div>-->
+      <div class="list">
+        <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
+          <img class="box-img" :src="item.image" alt="">
+          <div class="bottom">
+            <h3>{{item.title}}</h3>
+            <div>
+              <img class="img1" :src="item.designer.avatar" alt="">
+              <span>{{item.designer.name}}</span>
+              <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
+              <span>{{item.favor_nums}}</span>
+              <img class="img3" src="./../assets/image/yanjing.png" alt="">
+              <span>{{item.views}}</span>
             </div>
-            <div class="page-box">
-                <el-pagination
-                    background=""
-                    layout="prev, pager, next"
-                    @current-change="currentChange"
-                    :page-size="28"
-                    :total="1000"
-                ></el-pagination>
-            </div>
+          </div>
         </div>
-            <div v-else class="noList">
+      </div>
+      <div class="page-box">
+        <div class="page-table">
+          <el-pagination
+            background=""
+            layout="prev, pager, next"
+            @current-change="currentChange"
+            :page-size="size"
+            :total="total"
+          ></el-pagination>
+        </div>
+      </div>
+    </div>
+    <div v-else class="noList">
       <img src="./../assets/image/zanwudianzan.png" alt="">
       <h2>暂无作品</h2>
       <!-- <div>去上传作品</div> -->
     </div>
-    </div>
+  </div>
 </template>
 <script>
+import { Works } from "./../services/article";
 export default {
   data() {
     return {
-        isListShow: true
+      isListShow: true,
+      list: [],
+      page: 1,
+      total: 0,
+      size: 20
     };
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.getList();
+  },
   methods: {
-    currentChange(page) {
-      console.log(page);
+    getList() {
+      Works({
+        designer_id: this.$route.params.id,
+        page: this.page,
+        page_size: this.size
+      }).then(res => {
+        {
+          this.list = res.items;
+          this.total = res._meta.totalCount;
+          if (res.items.length == 0) {
+            this.isListShow = false;
+          }
+        }
+      });
     },
-    toDetail(i) {
-        this.$router.push({
-            name: 'detail'
-        })
+    currentChange(page) {
+      this.page = page;
+      this.getList();
+    },
+    toDetail(id) {
+      this.$router.push({
+        path: "/detail/" + id
+      });
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 .representative {
-      .noList {
+  .noList {
     padding-bottom: 130px;
     padding-top: 130px;
     img {
@@ -97,12 +114,18 @@ export default {
       cursor: pointer;
     }
   }
-    .content {
-        width: 100%;
-    }
+  .content {
+    width: 100%;
+  }
   .page-box {
-    width: 402px;
-    margin: 90px auto;
+    display: table;
+    width: 100%;
+    padding: 90px 0;
+    .page-table {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
   }
   .button {
     margin: 0 auto;

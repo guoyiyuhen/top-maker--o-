@@ -1,50 +1,44 @@
 <template>
   <div class="thumbs">
-    <div class="content" v-if="isListShow">
-      <div class="select">
-        <div class="select-box">
-          <el-select v-model="value" clearable @change="selectchange" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
+    <div class="select">
+      <div class="select-box">
+        <el-select v-model="value" clearable @change="selectchange" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </div>
+    </div>
+    <div class="content" v-if="isListShow">
       <div class="list">
-        <div class="box" v-for="(item,index) in 20" :key="index" @click="toDetail(index)">
-          <img
-            class="box-img"
-            src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-            alt=""
-          >
+        <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
+          <img class="box-img" :src="item.image" alt="">
           <div class="bottom">
-            <h3>小猪佩奇 《Hidden Innocence》</h3>
+            <h3>{{item.title}}</h3>
             <div>
-              <img
-                class="img1"
-                src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
-                alt=""
-              >
-              <span>mos摩森文斯</span>
+              <img class="img1" :src="item.designer.avatar" alt="">
+              <span>{{item.designer.name}}</span>
               <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
-              <span>10000</span>
+              <span>{{item.favor_nums}}</span>
               <img class="img3" src="./../assets/image/yanjing.png" alt="">
-              <span>10000</span>
+              <span>{{item.views}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="page-box">
-        <el-pagination
-          background=""
-          layout="prev, pager, next"
-          @current-change="currentChange"
-          :page-size="28"
-          :total="1000"
-        ></el-pagination>
+        <div class="page-table">
+          <el-pagination
+            background=""
+            layout="prev, pager, next"
+            @current-change="currentChange"
+            :page-size="size"
+            :total="total"
+          ></el-pagination>
+        </div>
       </div>
     </div>
     <div v-else class="noList">
@@ -55,54 +49,73 @@
   </div>
 </template>
 <script>
+import { Favors, Category } from "./../services/article";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "黄金糕",
-          label: "黄金糕"
-        },
-        {
-          value: "双皮奶",
-          label: "双皮奶"
-        },
-        {
-          value: "蚵仔煎",
-          label: "蚵仔煎"
-        },
-        {
-          value: "龙须面",
-          label: "龙须面"
-        },
-        {
-          value: "北京烤鸭",
-          label: "北京烤鸭"
-        }
-      ],
+      options: [],
       value: "",
-      isListShow: true
+      isListShow: true,
+      list: [],
+      page: 1,
+      total: 0,
+      size: 20
     };
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    Category().then(res => {
+      let options = [];
+      res.items.forEach(item => {
+        let obj = {
+          value: item.id,
+          label: item.name
+        };
+        options.push(obj);
+      });
+      this.options = options;
+    });
+    this.getList();
+  },
   methods: {
+    getList() {
+      let params = {
+        page: this.page,
+        page_size: this.size,
+        designer_id: this.$route.params.id
+      };
+      if (this.value !== "") {
+        params.category_id = this.value;
+      }
+      Favors(params).then(res => {
+        {
+          this.list = res.items;
+          this.total = res._meta.totalCount;
+          if (res.items.length == 0) {
+            this.isListShow = false;
+          } else {
+            this.isListShow = true;
+          }
+        }
+      });
+    },
     selectchange() {
-      console.log(this.value);
+      this.getList();
     },
     currentChange(page) {
-      console.log(page);
+      this.page = page;
+      this.getList();
     },
     toHome() {
       this.$router.push({
-        name: 'home'
-      })
+        name: "home"
+      });
     },
-    toDetail(i) {
-        this.$router.push({
-            name: 'detail'
-        })
+    toDetail(id) {
+      this.$router.push({
+        path: "/detail/" + id
+      });
     }
   }
 };
@@ -153,8 +166,14 @@ export default {
     }
   }
   .page-box {
-    width: 402px;
-    margin: 90px auto;
+    display: table;
+    width: 100%;
+    padding: 90px 0;
+    .page-table {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
   }
   .list {
     margin: 0 auto;

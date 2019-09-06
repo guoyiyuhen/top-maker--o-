@@ -10,8 +10,11 @@ export let timestampToTime = (time) => {
     }
 }
 // 分类
-export let Designer = (params = {}) => {
+export let Designer = (params = {}, id = -1) => {
     let url = '/api/designer';
+    if (id > 0) {
+        url = '/api/designer/' + id;
+    }
     return request({
         url,
         params,
@@ -23,6 +26,42 @@ export let Works = (params = {}, id = -1) => {
     if (id > 0) {
         url = '/api/works/' + id;
     }
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}
+
+export let Favors = (params = {}, id = -1) => {
+    let url = '/api/works/favors';
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}
+
+export let Monitor = (params = {}) => {
+    let url = '/api/works/monitor';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
+
+export let Category = (params = {}) => {
+    let url = '/api/category';
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}
+
+export let DesignrCategory = (params = {}) => {
+    let url = '/api/designer-category';
     return request({
         url,
         params,

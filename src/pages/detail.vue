@@ -1,35 +1,33 @@
 <template>
-    <div class="detail">
-        <div class="box">
-            <div class="left" v-html="content"></div>
-            <div class="right">
-                <img
-                    class="detail-head"
-                    :src="designer.avatar"
-                    alt=""
-                >
-                <h2>{{designer.name}}</h2>
-                <p>标签：{{designer.tags}}</p>
-                <div class="follow">
-                    <div class="left-c">
-                        <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
-                        <span>{{favor}}</span>
-                    </div>
-                    <div class="right-c">
-                        <img class="list-head" src="./../assets/image/yanjing.png" alt="">
-                        <span>{{views}}</span>
-                    </div>
-                </div>
-            </div>
+  <div class="detail">
+    <div class="box">
+      <div class="left">
+        <div class="ql-container">
+          <div class="ql-editor" v-html="content"></div>
         </div>
+      </div>
+      <div class="right">
+        <img class="detail-head" :src="designer.avatar" alt="">
+        <h2>{{designer.name}}</h2>
+        <p>标签：{{designer.tags}}</p>
+        <div class="follow">
+          <div class="table">
+            <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
+            <span>{{favor}}</span>
+            <img class="list-head" src="./../assets/image/yanjing.png" alt="">
+            <span>{{views}}</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
-import { Works } from "./../services/article";
+import { Works, Monitor } from "./../services/article";
 export default {
   data() {
     return {
-      content: '',
+      content: "",
       designer: {},
       favor: 0,
       views: 0
@@ -38,12 +36,17 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    Works({}, this.$route.params.id).then(res => {{
-      this.content = res.content;
-      this.designer = res.designer;
-      this.favor = res.favor_nums;
-      this.views = res.views;
-    }})
+    Monitor({ works_id: this.$route.params.id }).then(res => {
+      console.log("浏览成功");
+      Works({}, this.$route.params.id).then(res => {
+        {
+          this.content = res.content;
+          this.designer = res.designer;
+          this.favor = res.favor_nums;
+          this.views = res.views;
+        }
+      });
+    });
   },
   methods: {}
 };
@@ -69,52 +72,50 @@ export default {
       float: left;
       padding-top: 44px;
       .detail-head {
-          width: 130px;
-          height: 130px;
-          border-radius: 50%;
-          margin: 0 auto;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        margin: 0 auto;
       }
       h2 {
-          color: #3E3A39;
-          font-size: 21px;
-          text-align: center;
-          margin-top: 33px;
-          margin-bottom: 37px;
+        color: #3e3a39;
+        font-size: 21px;
+        text-align: center;
+        margin-top: 33px;
+        margin-bottom: 37px;
       }
       p {
-          color: #367CC1;
-          font-size: 15px;
-          text-align: center;
+        color: #367cc1;
+        font-size: 15px;
+        text-align: center;
       }
       .follow {
-        overflow: hidden;
-        margin: 0 auto;
+        display: table;
+        width: 100%;
         margin-top: 31px;
-        width: 120px;
+        .table {
+          display: table-cell;
+          text-align: center;
+          vertical-align: middle;
+          overflow: hidden;
+        }
         span {
           font-size: 12px;
           color: rgba(102, 100, 100, 1);
-          float: left;
           margin-left: 3px;
         }
-        .left-c {
-          float: left;
-          margin-right: 10px;
-          img {
-            float: left;
-            width: 12px;
-            margin-top: 2px;
-            height: 13px;
-          }
+        img:nth-child(1) {
+          display: inline-block;
+          width: 12px;
+          height: 13px;
+          vertical-align: middle;
         }
-        .right-c {
-          float: left;
-          img {
-            float: left;
-            margin-top: 3px;
-            width: 14px;
-            height: 11px;
-          }
+        img:nth-child(3) {
+          display: inline-block;
+          width: 14px;
+          height: 11px;
+          margin-left: 10px;
+          vertical-align: middle;
         }
       }
     }

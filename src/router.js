@@ -50,16 +50,15 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/personal',
+                    path: '/personal/:id',
                     name: 'personal',
-                    redirect: '/representative',
                     component: () => import('./pages/personal.vue'),
                     meta: {
                         title: '设计师'
                     },
                     children: [
                         { 
-                            path: '/representative',
+                            path: '/representative/:id',
                             name: 'representative',
                             component: () => import('./pages/representative.vue'),
                             meta: {
@@ -67,7 +66,7 @@ const router = new Router({
                             }
                         },
                         { 
-                            path: '/thumbs',
+                            path: '/thumbs/:id',
                             name: 'thumbs',
                             component: () => import('./pages/thumbs.vue'),
                             meta: {

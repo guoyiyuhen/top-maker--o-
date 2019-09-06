@@ -2,22 +2,22 @@
     <div class="personal">
         <div
             class="banner"
-            style="background: url(http://bernouly.oss-cn-beijing.aliyuncs.com/images/about/about2.png) no-repeat center;background-size: 100% 100%;"
+            :style="'background-image: url(' + designer.image + ');'"
         >
             <div class="box">
                 <img
-                    src="http://bernouly.oss-cn-beijing.aliyuncs.com/images/home/banner1.png"
+                    :src="designer.avatar"
                     alt=""
                 >
                 <div>
-                    <h1 :style="isWhite ? 'color: #fff;' : ''">YUM汤汤</h1>
-                    <h2 :style="isWhite ? 'color: #fff;' : ''">创意泡泡无限冒的汤宝宝</h2>
-                    <p :style="isWhite ? 'color: #fff;' : ''">标签：平面设计、插画设计</p>
-                    <span :style="isWhite ? 'color: #fff;' : ''">34768</span>
+                    <h1 :style="isWhite ? 'color: #fff;' : ''">{{designer.name}}</h1>
+                    <h2 :style="isWhite ? 'color: #fff;' : ''">{{designer.signature}}</h2>
+                    <p :style="isWhite ? 'color: #fff;' : ''">标签：{{designer.tags}}</p>
+                    <span :style="isWhite ? 'color: #fff;' : ''">{{designer.views}}</span>
                     <i :style="isWhite ? 'color: #fff;' : ''">人气</i>
                     <span
                         :style="isWhite ? 'color: #fff;margin-left: 50px;' : 'margin-left: 50px;'"
-                    >450</span>
+                    >{{designer.favor_nums}}</span>
                     <i :style="isWhite ? 'color: #fff;' : ''">赞</i>
                 </div>
             </div>
@@ -30,11 +30,13 @@
     </div>
 </template>
 <script>
+import { Designer } from "./../services/article";
 export default {
   data() {
     return {
       isWhite: true,
-      activeName: "representative"
+      activeName: "representative",
+      designer: {}
     };
   },
   watch: {
@@ -43,17 +45,28 @@ export default {
     }
   },
   created() {},
-  mounted() {},
+  mounted() {
+    Designer({}, this.$route.params.id).then(res => {{
+      this.designer = res;
+      this.isWhite = res.theme_color == 1 ? true : false;
+    }})
+    this.activeName = this.$route.name;
+    if (this.$route.name == 'personal') {
+        this.$router.push({
+          path: '/representative/' + this.$route.params.id
+        })
+    }
+  },
   methods: {
     toRepresentative() {
-      this.$router.push({
-        name: "representative"
-      });
+        this.$router.push({
+          path: '/representative/' + this.$route.params.id
+        })
     },
     toThumbs() {
       this.$router.push({
-        name: "thumbs"
-      });
+        path: '/thumbs/' + this.$route.params.id
+      })
     }
   }
 };
@@ -64,6 +77,9 @@ export default {
     width: 100%;
     height: 329px;
     padding-top: 178px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
     .box {
       width: 1140px;
       margin: 0 auto;
