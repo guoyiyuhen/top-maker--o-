@@ -1,8 +1,8 @@
 <template>
     <div class="home">
         <el-carousel height="496px">
-            <el-carousel-item v-for="item in 4" :key="item">
-                <h3>{{ item }}</h3>
+            <el-carousel-item v-for="item in swiper" :key="item.id">
+                <img class="swiper-img" :src="item.image" @click="toDetail(item.id)" alt="" />
             </el-carousel-item>
         </el-carousel>
 
@@ -12,7 +12,7 @@
             <div class="list" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
                 <img
                     class="list-img"
-                    :src="item.image"
+                    :src="item.thumb_image"
                     alt=""
                 >
                 <div class="list-content">
@@ -44,14 +44,15 @@
     </div>
 </template>
 <script>
-import { Works } from "./../services/article";
+import { Works,Home } from "./../services/article";
 let timer = null;
 export default {
   components: {},
   data() {
     return {
       banIdx: 0,
-      list: []
+      list: [],
+      swiper: []
     };
   },
   watch: {},
@@ -60,6 +61,9 @@ export default {
   },
   mounted() {
     this.imgWidth = window.innerWidth;
+    Home().then(res => {
+      this.swiper = res.banners;
+    })
     Works({is_good: 1}).then(res => {{
       this.list = res.items;
     }})
@@ -95,6 +99,12 @@ export default {
   
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+
+  .swiper-img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
   .box {
     width: 1296px;

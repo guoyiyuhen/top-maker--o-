@@ -15,7 +15,7 @@
     <div class="content" v-if="isListShow">
       <div class="list">
         <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
-          <img class="box-img" :src="item.image" alt="">
+          <img class="box-img" :src="item.thumb_image" alt="">
           <div class="bottom">
             <h3>{{item.title}}</h3>
             <div>

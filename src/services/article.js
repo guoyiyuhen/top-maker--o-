@@ -69,3 +69,13 @@ export let DesignrCategory = (params = {}) => {
     })
 }
 
+export let Home = (params = {}) => {
+    let url = '/api/works/home';
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}
+
+
