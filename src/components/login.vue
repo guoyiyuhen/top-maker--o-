@@ -9,8 +9,8 @@
                 <div @click="send">{{time}}</div>
             </div>
             <div class="submit" @click="submit">{{islogin ? '登陆' : '注册'}}</div>
-            <h3 v-if="islogin">第三方账号登陆</h3>
-            <div class="third" v-if="islogin">
+            <h3>第三方账号登陆</h3>
+            <div class="third">
                 <img src="./../assets/image/qq.png" class="logo" alt="">
                 <img src="./../assets/image/weiixn.png" class="logo" alt="">
             </div>
@@ -20,6 +20,11 @@
 </template>
 
 <script>
+
+import {
+  SmsCode,
+  WebLogin
+} from "./../services/article";
 export default {
     props:['islogin','callBack'],
     data() {
@@ -38,13 +43,13 @@ export default {
     },
     methods: {
         cancel() {
-            this.callBack();
+            this.callBack(false);
         },
         send() {
             if (this.isSend) {
                 return;
             }
-            if (this.params.mobile == '') {
+            if (!(/^1[3456789]\d{9}$/.test(this.params.mobile))) {
                 alert('请输入正确的手机号');
                 return;
             }
@@ -52,6 +57,9 @@ export default {
             let idx = 60;
             clearInterval(this.timer);
             this.time = idx + 's';
+            SmsCode({mobile: this.params.mobile, type: 1}).then(res => {
+                console.log('发送成功')
+            })
             this.timer = setInterval(() => {
                 idx --;
                 if (idx <= 0) {
@@ -64,7 +72,19 @@ export default {
             }, 1000);
         },
         submit() {
-            console.log(this.params);
+            if (!(/^1[3456789]\d{9}$/.test(this.params.mobile))) {
+                alert('请输入正确的手机号');
+                return;
+            }
+            if (this.params.code == '') {
+                alert('请输入短信验证码');
+                return;
+            }
+            WebLogin(this.params).then(res => {
+                localStorage.setItem('access_token', res.access_token);
+                localStorage.setItem('nickname', res.nickname);
+                this.callBack(true);
+            })
         }
     }
     

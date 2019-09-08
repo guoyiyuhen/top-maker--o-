@@ -78,4 +78,38 @@ export let Home = (params = {}) => {
     })
 }
 
+export let DesignerRecommend = (params = {}) => {
+    let url = '/api/designer/recommend';
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}
 
+export let SmsCode = (params = {}) => {
+    let url = '/api/account/sms-code';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
+
+export let WebLogin = (params = {}) => {
+    let url = '/api/account/web-login';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
+
+export let Logout = (params = {}) => {
+    let url = '/api/account/logout';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}

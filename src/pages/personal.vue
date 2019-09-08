@@ -42,6 +42,11 @@ export default {
   watch: {
     $route(route) {
       this.activeName = route.name;
+      if (this.$route.name == 'personal') {
+          this.$router.push({
+            path: '/representative/' + this.$route.params.id
+          })
+      }
     }
   },
   created() {},

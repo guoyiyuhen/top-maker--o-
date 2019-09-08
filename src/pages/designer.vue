@@ -1,8 +1,18 @@
 <template>
   <div class="designer">
     <el-carousel height="496px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3>{{ item }}</h3>
+      <el-carousel-item v-for="item in swiper" :key="item.id">
+        <div
+          class="banner"
+          :style="'background-image: url(' + item.image + ');'"
+          @click="toPersonal(item.id)"
+        >
+          <div class="box">
+            <h1 :style="item.theme_color == 1 ? 'color: #fff;' : ''">{{item.name}}</h1>
+            <p :style="item.theme_color == 1 ? 'color: #fff;' : ''">标签：{{item.tags}}</p>
+            <h2 :style="item.theme_color == 1 ? 'color: #fff;' : ''">{{item.signature}}</h2>
+          </div>
+        </div>
       </el-carousel-item>
     </el-carousel>
     <div class="cascader">
@@ -54,7 +64,11 @@
   </div>
 </template>
 <script>
-import { Designer, DesignrCategory } from "./../services/article";
+import {
+  Designer,
+  DesignrCategory,
+  DesignerRecommend
+} from "./../services/article";
 export default {
   data() {
     return {
@@ -74,12 +88,16 @@ export default {
       list: [],
       page: 1,
       total: 0,
-      size: 6
+      size: 6,
+      swiper: []
     };
   },
   watch: {},
   created() {},
   mounted() {
+    DesignerRecommend().then(res => {
+      this.swiper = res.items;
+    });
     DesignrCategory().then(res => {
       let options2 = [];
       res.items.forEach(item => {
@@ -131,6 +149,34 @@ export default {
 <style lang="scss" scoped>
 .designer {
   background: #fbfbfb;
+  .banner {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    cursor: pointer;
+    .box {
+      width: 575px;
+      margin-left: 213px;
+      padding-top: 178px;
+      h1 {
+        color: #3e3a39;
+        font-size: 30px;
+        font-weight: bold;
+      }
+      h2 {
+        font-size: 16px;
+        color: #666464;
+      }
+      p {
+        color: #666464;
+        font-size: 14px;
+        margin-top: 13px;
+        margin-bottom: 48px;
+      }
+    }
+  }
   .page-box {
     display: table;
     width: 100%;
