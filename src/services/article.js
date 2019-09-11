@@ -113,3 +113,12 @@ export let Logout = (params = {}) => {
         method: 'post'
     })
 }
+
+export let Article = (params = {}) => {
+    let url = '/api/article';
+    return request({
+        url,
+        params,
+        method: 'get'
+    })
+}

@@ -1,6 +1,8 @@
 <template>
   <div class="works">
-    <img class="ad" src="./../assets/image/bannertiao@2x.png" alt="">
+    <a :href="jump_url ? jump_url : 'http://www.baidu.com'">
+      <img class="ad" :src="image_jump" alt="">
+    </a>
     <div class="cascader">
       <h2>筛选：</h2>
       <div>
@@ -54,7 +56,7 @@
   </div>
 </template>
 <script>
-import { Works, Category } from "./../services/article";
+import { Works, Category, Article } from "./../services/article";
 export default {
   data() {
     return {
@@ -74,12 +76,21 @@ export default {
       list: [],
       page: 1,
       total: 0,
-      size: 28
+      size: 28,
+      image_jump: '',
+      jump_url: ''
     };
   },
   watch: {},
   created() {},
   mounted() {
+    Article({
+      category_id: 1,
+      type: 2
+    }).then(res => {
+      this.image_jump = res.items[0].image;
+      this.jump_url = res.items[0].jump_url;
+    })
     Category().then(res => {
       let options2 = [];
       res.items.forEach(item => {
