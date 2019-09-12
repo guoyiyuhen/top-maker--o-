@@ -9,11 +9,11 @@
                 <div @click="send">{{time}}</div>
             </div>
             <div class="submit" @click="submit">{{islogin ? '登陆' : '注册'}}</div>
-            <h3>第三方账号登陆</h3>
+            <!-- <h3>第三方账号登陆</h3>
             <div class="third">
                 <img src="./../assets/image/qq.png" class="logo" alt="">
                 <img src="./../assets/image/weiixn.png" class="logo" alt="">
-            </div>
+            </div> -->
         </div>
         <div class="mask" @click="cancel"></div>
     </div>

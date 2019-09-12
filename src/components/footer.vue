@@ -1,8 +1,8 @@
 <template>
     <div class="footer">
         <div class="box">
-            <img src="./../assets/image/weixintubiao.png" alt="">
-            <img src="./../assets/image/weibotubiao.png" alt="">
+            <!-- <img src="./../assets/image/weixintubiao.png" alt="">
+            <img src="./../assets/image/weibotubiao.png" alt=""> -->
             copyright©2015-2019 - 纪家庙 - 京ICP备17025107号
         </div>
     </div>
