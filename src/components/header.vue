@@ -151,7 +151,7 @@ export default {
   .login {
     float: left;
     font-size: 12px;
-    padding-top: 35px;
+    padding-top: 30px;
     img {
       display: block;
       float: left;
