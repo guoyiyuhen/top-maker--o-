@@ -85,11 +85,13 @@ export default {
   created() {},
   mounted() {
     Article({
-      category_id: 1,
+      category_id: 3,
       type: 2
     }).then(res => {
-      this.image_jump = res.items[0].image;
-      this.jump_url = res.items[0].jump_url;
+      if (res.items.length > 0) {
+        this.image_jump = res.items[0].image;
+        this.jump_url = res.items[0].jump_url;
+      }
     })
     Category().then(res => {
       let options2 = [];

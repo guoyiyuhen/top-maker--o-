@@ -70,7 +70,7 @@ export let DesignrCategory = (params = {}) => {
 }
 
 export let Home = (params = {}) => {
-    let url = '/api/works/home';
+    let url = '/api/article/home';
     return request({
         url,
         params,

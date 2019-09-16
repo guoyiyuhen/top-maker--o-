@@ -10,37 +10,37 @@
   <body>
     <script>
 
-      fnResize();
+      // fnResize();
       
-      window.onresize = function () {
+      // window.onresize = function () {
       
-        fnResize();
+      //   fnResize();
       
-      }
+      // }
       
-      function fnResize() {
+      // function fnResize() {
         
-        var deviceWidth = document.documentElement.clientWidth || window.innerWidth
+      //   var deviceWidth = document.documentElement.clientWidth || window.innerWidth
         
-        if (deviceWidth > 1200) {
-          return;
-        }
+      //   if (deviceWidth > 1200) {
+      //     return;
+      //   }
 
-        if (deviceWidth >= 750) {
+      //   if (deviceWidth >= 750) {
         
-          deviceWidth = 750
+      //     deviceWidth = 750
         
-        }
+      //   }
         
-        if (deviceWidth <= 320) {
+      //   if (deviceWidth <= 320) {
         
-          deviceWidth = 320
+      //     deviceWidth = 320
         
-        }
+      //   }
         
-        document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px'
+      //   document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px'
         
-      }
+      // }
           
     </script>
     <noscript>

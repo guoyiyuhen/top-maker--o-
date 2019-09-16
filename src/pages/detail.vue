@@ -10,13 +10,15 @@
         <img class="detail-head" :src="designer.avatar" alt="">
         <h2>{{designer.name}}</h2>
         <p>标签：{{designer.tags}}</p>
-        <div class="follow">
-          <div class="table">
-            <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
-            <span>{{favor}}</span>
-            <img class="list-head" src="./../assets/image/yanjing.png" alt="">
-            <span>{{views}}</span>
-          </div>
+        <div class="cmcc">
+          <el-row :gutter="20">
+            <el-col :span="12" :offset="6"><div class="grid-content bg-purple">
+              <img src="./../assets/image/logo_xiao.png" alt="">
+              <span>{{favor}}</span>
+              <img src="./../assets/image/yanjing.png" alt="">
+              <span>{{views}}</span>
+              </div></el-col>
+          </el-row>
         </div>
       </div>
     </div>
@@ -89,31 +91,20 @@ export default {
         font-size: 15px;
         text-align: center;
       }
-      .follow {
-        display: table;
-        width: 100%;
-        margin-top: 31px;
-        .table {
-          display: table-cell;
-          text-align: center;
-          vertical-align: middle;
-          overflow: hidden;
-        }
+      .cmcc {
+        text-align: center;
+        margin-top: 30px;
         span {
           font-size: 12px;
           color: rgba(102, 100, 100, 1);
           margin-left: 3px;
         }
         img:nth-child(1) {
-          display: inline-block;
-          width: 12px;
-          height: 13px;
+          display: inline;
           vertical-align: middle;
         }
         img:nth-child(3) {
-          display: inline-block;
-          width: 14px;
-          height: 11px;
+          display: inline;
           margin-left: 10px;
           vertical-align: middle;
         }
