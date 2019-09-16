@@ -1,50 +1,39 @@
 <template>
-    <div class="home">
-        <el-carousel height="496px">
-            <el-carousel-item v-for="item in swiper" :key="item.id">
-                <img class="swiper-img" :src="item.image" @click="toDetail(item.id)" alt="" />
-            </el-carousel-item>
-        </el-carousel>
-
-
-
-        <div class="box">
-            <div class="list" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
-                <img
-                    class="list-img"
-                    :src="item.thumb_image"
-                    alt=""
-                >
-                <div class="list-content">
-                    <div class="list-left">
-                        <h2>{{item.title}}</h2>
-                        <p>{{item.brief}}</p>
-                    </div>
-                    <div class="list-right">
-                        <img
-                            class="list-head"
-                            :src="item.designer.avatar"
-                            alt=""
-                        >
-                        <p>{{item.designer.name}}</p>
-                        <div class="follow">
-                            <div class="left">
-                                <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
-                                <span>{{item.favor_nums}}</span>
-                            </div>
-                            <div class="right">
-                                <img class="list-head" src="./../assets/image/yanjing.png" alt="">
-                                <span>{{item.views}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="home">
+    <el-carousel height="496px">
+      <el-carousel-item v-for="item in swiper" :key="item.id">
+        <img class="swiper-img" :src="item.image" @click="toDetail(item)" alt="">
+      </el-carousel-item>
+    </el-carousel>
+    <div class="box">
+      <div class="list" v-for="(item,index) in list" :key="index" @click="toDetail(item)">
+        <img class="list-img" :src="item.thumb_image" alt="">
+        <div class="list-content">
+          <div class="list-left">
+            <h2>{{item.title}}</h2>
+            <p>{{item.brief}}</p>
+          </div>
+          <div class="list-right">
+            <img class="list-head" :src="item.designer.avatar" alt="">
+            <p>{{item.designer.name}}</p>
+            <div class="follow">
+              <div class="left">
+                <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
+                <span>{{item.favor_nums}}</span>
+              </div>
+              <div class="right">
+                <img class="list-head" src="./../assets/image/yanjing.png" alt="">
+                <span>{{item.views}}</span>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
-import { Works,Home } from "./../services/article";
+import { Works, Home } from "./../services/article";
 let timer = null;
 export default {
   components: {},
@@ -63,20 +52,26 @@ export default {
     this.imgWidth = window.innerWidth;
     Home().then(res => {
       this.swiper = res.banners;
-    })
-    Works({is_good: 1}).then(res => {{
-      this.list = res.items;
-    }})
+    });
+    Works({ is_good: 1 }).then(res => {
+      {
+        this.list = res.items;
+      }
+    });
   },
   methods: {
     bannertap(item) {
       this.banIdx = item;
       this.left = -item * this.imgWidth;
     },
-    toDetail(id) {
+    toDetail(item) {
+      if (item.type && item.type == 2) {
+        location.href = item.jump_url;
+      } else {
         this.$router.push({
-            path: '/detail/' + id
-        })
+          path: "/detail/" + item.id
+        });
+      }
     }
   }
 };
@@ -92,12 +87,12 @@ export default {
     margin: 0;
     text-align: center;
   }
-  
+
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
   }
-  
-  .el-carousel__item:nth-child(2n+1) {
+
+  .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
   }
 
