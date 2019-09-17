@@ -21,6 +21,7 @@ export let Designer = (params = {}, id = -1) => {
         method: 'get'
     })
 }
+
 export let Works = (params = {}, id = -1) => {
     let url = '/api/works';
     if (id > 0) {
@@ -29,6 +30,14 @@ export let Works = (params = {}, id = -1) => {
     return request({
         url,
         params,
+        method: 'get'
+    })
+}
+
+export let View2 = (id) => {
+    let url = '/api/works/view2/' + id;
+    return request({
+        url,
         method: 'get'
     })
 }

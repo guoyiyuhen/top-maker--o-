@@ -100,6 +100,9 @@ export default {
         localStorage.removeItem("access_token");
         localStorage.removeItem("nickname");
         this.changelogin(false, "");
+        this.$router.push({
+          path: '/home'
+        });
       });
     }
   }

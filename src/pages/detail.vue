@@ -40,7 +40,13 @@
   </div>
 </template>
 <script>
-import { Works, Monitor, Dofavor, Undofavor } from "./../services/article";
+import {
+  Works,
+  Monitor,
+  Dofavor,
+  Undofavor,
+  View2
+} from "./../services/article";
 export default {
   data() {
     return {
@@ -61,15 +67,28 @@ export default {
   },
   methods: {
     getList() {
-      Works({}, this.$route.params.id).then(res => {
-        {
-          this.content = res.content;
-          this.designer = res.designer;
-          this.favor = res.favor_nums;
-          this.views = res.views;
-          this.isfavor = res.isfavor;
-        }
-      });
+      let access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        Works({},this.$route.params.id).then(res => {
+          {
+            this.content = res.content;
+            this.designer = res.designer;
+            this.favor = res.favor_nums;
+            this.views = res.views;
+            this.isfavor = res.isfavor;
+          }
+        });
+      } else {
+        View2(this.$route.params.id).then(res => {
+          {
+            this.content = res.content;
+            this.designer = res.designer;
+            this.favor = res.favor_nums;
+            this.views = res.views;
+            this.isfavor = res.isfavor;
+          }
+        });
+      }
     },
     changefavor(change) {
       let access_token = localStorage.getItem("access_token");
