@@ -12,12 +12,27 @@
         <p>标签：{{designer.tags}}</p>
         <div class="cmcc">
           <el-row :gutter="20">
-            <el-col :span="12" :offset="6"><div class="grid-content bg-purple">
-              <img src="./../assets/image/logo_xiao.png" alt="">
-              <span>{{favor}}</span>
-              <img src="./../assets/image/yanjing.png" alt="">
-              <span>{{views}}</span>
-              </div></el-col>
+            <el-col :span="12" :offset="6">
+              <div class="grid-content bg-purple">
+                <img
+                  src="./../assets/image/logo_xiao.png"
+                  alt="取消点赞"
+                  title="取消点赞"
+                  v-if="isfavor"
+                  @click="changefavor(false)"
+                >
+                <img
+                  src="./../assets/image/logo_no.png"
+                  alt="点赞"
+                  title="点赞"
+                  v-else
+                  @click="changefavor(true)"
+                >
+                <span>{{favor}}</span>
+                <img src="./../assets/image/yanjing.png" alt="浏览" title="浏览">
+                <span>{{views}}</span>
+              </div>
+            </el-col>
           </el-row>
         </div>
       </div>
@@ -25,14 +40,15 @@
   </div>
 </template>
 <script>
-import { Works, Monitor } from "./../services/article";
+import { Works, Monitor, Dofavor, Undofavor } from "./../services/article";
 export default {
   data() {
     return {
       content: "",
       designer: {},
       favor: 0,
-      views: 0
+      views: 0,
+      isfavor: false
     };
   },
   watch: {},
@@ -46,11 +62,37 @@ export default {
           this.designer = res.designer;
           this.favor = res.favor_nums;
           this.views = res.views;
+          this.isfavor = res.isfavor;
         }
       });
     });
   },
-  methods: {}
+  methods: {
+    changefavor(change) {
+      let access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        if (change) {
+          Dofavor({ works_id: this.$route.params.id }).then(res => {
+            this.isfavor = change;
+            this.$message({
+              message: "点赞成功",
+              type: "success"
+            });
+          });
+        } else {
+          Undofavor({ works_id: this.$route.params.id }).then(res => {
+            this.isfavor = change;
+            this.$message({
+              message: "取消点赞",
+              type: "success"
+            });
+          });
+        }
+      } else {
+        this.$message("请登陆");
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -12,9 +12,9 @@
             <div>
               <img class="img1" :src="item.designer.avatar" alt="">
               <span>{{item.designer.name}}</span>
-              <img class="img2" src="./../assets/image/logo_xiao.png" alt="">
+              <img class="img2" src="./../assets/image/logo_xiao.png" alt="赞" title="赞">
               <span>{{item.favor_nums}}</span>
-              <img class="img3" src="./../assets/image/yanjing.png" alt="">
+              <img class="img3" src="./../assets/image/yanjing.png" alt="浏览" title="浏览">
               <span>{{item.views}}</span>
             </div>
           </div>
@@ -183,17 +183,13 @@ export default {
             border-radius: 50%;
           }
           .img2 {
-            width: 12px;
-            height: 13px;
-            margin-top: 4px;
+            margin-top: 3px;
             float: left;
             margin-left: 38px;
           }
           .img3 {
-            width: 14px;
-            height: 11px;
-            margin-top: 5px;
             float: left;
+            margin-top: 3px;
             margin-left: 11px;
           }
           span {

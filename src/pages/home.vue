@@ -18,11 +18,11 @@
             <p>{{item.designer.name}}</p>
             <div class="follow">
               <div class="left">
-                <img class="list-head" src="./../assets/image/logo_xiao.png" alt="">
+                <img src="./../assets/image/logo_xiao.png" alt="赞" title="赞">
                 <span>{{item.favor_nums}}</span>
               </div>
               <div class="right">
-                <img class="list-head" src="./../assets/image/yanjing.png" alt="">
+                <img src="./../assets/image/yanjing.png" alt="浏览" title="浏览">
                 <span>{{item.views}}</span>
               </div>
             </div>
@@ -170,18 +170,14 @@ export default {
               margin-right: 10px;
               img {
                 float: left;
-                width: 12px;
-                margin-top: 2px;
-                height: 13px;
+                margin-top: 1px;
               }
             }
             .right {
               float: left;
               img {
+                margin-top: 1px;
                 float: left;
-                margin-top: 3px;
-                width: 14px;
-                height: 11px;
               }
             }
           }

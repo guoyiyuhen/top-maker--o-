@@ -25,4 +25,7 @@ export default {
     html {
         font-size: 16px;
     }
+    img {
+        cursor: pointer;
+    }
 </style>

@@ -122,3 +122,21 @@ export let Article = (params = {}) => {
         method: 'get'
     })
 }
+
+export let Dofavor = (params = {}) => {
+    let url = '/api/works/dofavor';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
+
+export let Undofavor = (params = {}) => {
+    let url = '/api/works/undofavor';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
