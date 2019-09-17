@@ -56,6 +56,11 @@ export default {
   mounted() {
     Monitor({ works_id: this.$route.params.id }).then(res => {
       console.log("浏览成功");
+      this.getList();
+    });
+  },
+  methods: {
+    getList() {
       Works({}, this.$route.params.id).then(res => {
         {
           this.content = res.content;
@@ -65,27 +70,25 @@ export default {
           this.isfavor = res.isfavor;
         }
       });
-    });
-  },
-  methods: {
+    },
     changefavor(change) {
       let access_token = localStorage.getItem("access_token");
       if (access_token) {
         if (change) {
           Dofavor({ works_id: this.$route.params.id }).then(res => {
-            this.isfavor = change;
             this.$message({
               message: "点赞成功",
               type: "success"
             });
+            this.getList();
           });
         } else {
           Undofavor({ works_id: this.$route.params.id }).then(res => {
-            this.isfavor = change;
             this.$message({
               message: "取消点赞",
               type: "success"
             });
+            this.getList();
           });
         }
       } else {
