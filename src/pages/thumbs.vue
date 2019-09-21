@@ -31,13 +31,13 @@
       </div>
       <div class="page-box">
         <div class="page-table">
-          <el-pagination
-            background=""
-            layout="prev, pager, next"
-            @current-change="currentChange"
-            :page-size="size"
+          <com-mpage
+            :size="size"
             :total="total"
-          ></el-pagination>
+            :change="currentChange"
+            :color2="'#fff'"
+            :color="'#fbfbfb'"
+          ></com-mpage>
         </div>
       </div>
     </div>
@@ -50,7 +50,11 @@
 </template>
 <script>
 import { Favors, Category } from "./../services/article";
+import comMpage from "@/components/pagination";
 export default {
+  components: {
+    comMpage
+  },
   data() {
     return {
       options: [],

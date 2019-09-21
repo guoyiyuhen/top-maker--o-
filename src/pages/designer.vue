@@ -52,13 +52,7 @@
     </div>
     <div class="page-box">
       <div class="page-table">
-        <el-pagination
-          background=""
-          layout="prev, pager, next"
-          @current-change="currentChange"
-          :page-size="size"
-          :total="total"
-        ></el-pagination>
+        <com-mpage :size="size" :total="total" :change="currentChange" :color="'#fff'" :color2="'#fbfbfb'"></com-mpage>
       </div>
     </div>
   </div>
@@ -69,7 +63,11 @@ import {
   DesignrCategory,
   DesignerRecommend
 } from "./../services/article";
+import comMpage from "@/components/pagination";
 export default {
+  components: {
+    comMpage
+  },
   data() {
     return {
       options1: [
@@ -87,7 +85,7 @@ export default {
       value2: "",
       list: [],
       page: 1,
-      total: 0,
+      total: 1,
       size: 6,
       swiper: []
     };
