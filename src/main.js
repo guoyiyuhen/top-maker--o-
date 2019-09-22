@@ -14,7 +14,7 @@ axios.interceptors.request.use(
     config => {
         //config.baseURL = '/api/api/';
         // config.baseURL = process.env.NODE_ENV === 'production' ? '' : '';
-        config.baseURL = '/';
+        config.baseURL = 'http://api.top.tmaker.com';
         config.withCredentials = true; // 允许携带token ,这个是解决跨域产生的相关问题
         config.timeout = 6000;
         let token = localStorage.getItem('access_token');

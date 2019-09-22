@@ -1,7 +1,7 @@
 let webpack = require("webpack");
 
 module.exports = {
-    publicPath: process.env.NODE_ENV === 'production' ? '/api/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
     devServer: {
         port: 3001,
         proxy: {
