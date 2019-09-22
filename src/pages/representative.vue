@@ -66,15 +66,19 @@ export default {
         designer_id: this.$route.params.id,
         page: this.page,
         page_size: this.size
-      }).then(res => {
-        {
-          this.list = res.items;
-          this.total = res._meta.totalCount;
-          if (res.items.length == 0) {
-            this.isListShow = false;
+      })
+        .then(res => {
+          {
+            this.list = res.items;
+            this.total = res._meta.totalCount;
+            if (res.items.length == 0) {
+              this.isListShow = false;
+            }
           }
-        }
-      });
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        });
     },
     currentChange(page) {
       this.page = page;

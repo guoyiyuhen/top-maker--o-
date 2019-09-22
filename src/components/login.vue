@@ -4,6 +4,7 @@
       <img src="./../assets/image/logo_dengluye@2x.png" class="logo" alt="">
       <h2>欢迎回来</h2>
       <!-- <input type="text" placeholder="姓名" maxlength="10" v-model="name" v-if="!islogin"> -->
+
       <input type="text" class="input-top" placeholder="手机号" maxlength="11" v-model="params.mobile">
       <div class="code">
         <input type="text" placeholder="短信验证码" maxlength="6" v-model="params.code">
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { SmsCode, WebLogin } from "./../services/article";
+import { SmsCode, WebLogin, WebRegister } from "./../services/article";
 export default {
   props: ["islogin", "callBack"],
   data() {
@@ -78,21 +79,34 @@ export default {
         alert("请输入短信验证码");
         return;
       }
-      if (!this.islogin) {
+      if (this.islogin) {
+        WebLogin(this.params).then(res => {
+          localStorage.setItem("access_token", res.access_token);
+          localStorage.setItem("nickname", res.nickname);
+          this.callBack(true);
+          this.$router.push({
+            path: "/home"
+          });
+        }).catch(err => {
+          this.$message.error(err);
+        });
+      } else {
         if (this.name == "") {
           alert("请输入姓名");
           return;
         }
         this.params.name = this.name;
+        WebRegister(this.params).then(res => {
+          localStorage.setItem("access_token", res.access_token);
+          localStorage.setItem("nickname", res.nickname);
+          this.callBack(true);
+          this.$router.push({
+            path: "/home"
+          });
+        }).catch(err => {
+          this.$message.error(err);
+        });;
       }
-      WebLogin(this.params).then(res => {
-        localStorage.setItem("access_token", res.access_token);
-        localStorage.setItem("nickname", res.nickname);
-        this.callBack(true);
-        this.$router.push({
-          path: "/home"
-        });
-      });
     }
   }
 };

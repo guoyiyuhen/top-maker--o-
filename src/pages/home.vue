@@ -50,14 +50,22 @@ export default {
   },
   mounted() {
     this.imgWidth = window.innerWidth;
-    Home().then(res => {
-      this.swiper = res.banners;
-    });
-    Works({ is_good: 1 }).then(res => {
-      {
-        this.list = res.items;
-      }
-    });
+    Home()
+      .then(res => {
+        this.swiper = res.banners;
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      });
+    Works({ is_good: 1 })
+      .then(res => {
+        {
+          this.list = res.items;
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      });
   },
   methods: {
     bannertap(item) {
