@@ -1,22 +1,23 @@
 <template>
-    <div class="login">
-        <div class="box">
-            <img src="./../assets/image/logo_dengluye@2x.png" class="logo" alt="">
-            <h2>欢迎回来</h2>
-            <input type="text" placeholder="手机号" maxlength="11" v-model="params.mobile">
-            <div class="code">
-                <input type="text" placeholder="短信验证码" maxlength="6" v-model="params.code">
-                <div @click="send">{{time}}</div>
-            </div>
-            <div class="submit" @click="submit">{{islogin ? '登陆' : '注册'}}</div>
-            <!-- <h3>第三方账号登陆</h3>
+  <div class="login">
+    <div class="box">
+      <img src="./../assets/image/logo_dengluye@2x.png" class="logo" alt="">
+      <h2>欢迎回来</h2>
+      <!-- <input type="text" placeholder="姓名" maxlength="10" v-model="name" v-if="!islogin"> -->
+      <input type="text" class="input-top" placeholder="手机号" maxlength="11" v-model="params.mobile">
+      <div class="code">
+        <input type="text" placeholder="短信验证码" maxlength="6" v-model="params.code">
+        <div @click="send">{{time}}</div>
+      </div>
+      <div class="submit" @click="submit">{{islogin ? '登陆' : '注册'}}</div>
+      <!-- <h3>第三方账号登陆</h3>
             <div class="third">
                 <img src="./../assets/image/qq.png" class="logo" alt="">
                 <img src="./../assets/image/weiixn.png" class="logo" alt="">
-            </div>-->
-        </div>
-        <div class="mask" @click="cancel"></div>
+      </div>-->
     </div>
+    <div class="mask" @click="cancel"></div>
+  </div>
 </template>
 
 <script>
@@ -31,7 +32,8 @@ export default {
       },
       time: "获取短信验证码",
       timer: null,
-      isSend: false
+      isSend: false,
+      name: ""
     };
   },
   mounted() {
@@ -75,6 +77,13 @@ export default {
       if (this.params.code == "") {
         alert("请输入短信验证码");
         return;
+      }
+      if (!this.islogin) {
+        if (this.name == "") {
+          alert("请输入姓名");
+          return;
+        }
+        this.params.name = this.name;
       }
       WebLogin(this.params).then(res => {
         localStorage.setItem("access_token", res.access_token);
@@ -140,6 +149,9 @@ export default {
       margin: 0 auto;
       padding: 0 11px;
       font-size: 14px;
+    }
+    .input-top {
+      margin-top: 32px;
     }
     .code {
       width: 330px;

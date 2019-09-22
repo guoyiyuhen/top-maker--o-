@@ -43,21 +43,25 @@
       </div>
     </div>
     <div class="page-box">
-      <div class="page-table">
-        <el-pagination
-          background=""
-          layout="prev, pager, next"
-          @current-change="currentChange"
-          :page-size="size"
+      <div class="page-table" id="cmcc">
+        <com-mpage
+          :size="size"
           :total="total"
-        ></el-pagination>
+          :change="currentChange"
+          :color2="'#fff'"
+          :color="'#fbfbfb'"
+        ></com-mpage>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { Works, Category, Article } from "./../services/article";
+import comMpage from "@/components/pagination";
 export default {
+  components: {
+    comMpage
+  },
   data() {
     return {
       options1: [
@@ -77,8 +81,8 @@ export default {
       page: 1,
       total: 0,
       size: 28,
-      image_jump: '',
-      jump_url: ''
+      image_jump: "",
+      jump_url: ""
     };
   },
   watch: {},
@@ -92,16 +96,16 @@ export default {
         this.image_jump = res.items[0].image;
         this.jump_url = res.items[0].jump_url;
       }
-    })
+    });
     Category().then(res => {
       let options2 = [];
       res.items.forEach(item => {
         let obj = {
           value: item.id,
           label: item.name
-        }
+        };
         options2.push(obj);
-      })
+      });
       this.options2 = options2;
     });
     this.getList();
@@ -130,8 +134,8 @@ export default {
       this.getList();
     },
     currentChange(page) {
-      this.page = page;
-      this.getList();
+      // this.page = page;
+      // this.getList();
     },
     toDetail(id) {
       this.$router.push({
