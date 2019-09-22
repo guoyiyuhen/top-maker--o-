@@ -106,8 +106,8 @@ export default {
       .catch(err => {
         this.$message.error(err.message);
       });
-    DesignrCategory()
-      .then(res => {
+    DesignrCategory().then(
+      res => {
         let options2 = [];
         res.items.forEach(item => {
           let obj = {
@@ -117,10 +117,11 @@ export default {
           options2.push(obj);
         });
         this.options2 = options2;
-      })
-      .catch(err => {
+      },
+      err => {
         this.$message.error(err.message);
-      });
+      }
+    );
     this.getList();
   },
   methods: {
@@ -136,16 +137,17 @@ export default {
       if (this.value2 !== "") {
         params.category_id = this.value2;
       }
-      Designer(params)
-        .then(res => {
+      Designer(params).then(
+        res => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
           }
-        })
-        .catch(err => {
+        },
+        err => {
           this.$message.error(err.message);
-        });
+        }
+      );
     },
     selectchange() {
       this.getList();

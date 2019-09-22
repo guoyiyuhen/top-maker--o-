@@ -91,18 +91,19 @@ export default {
     Article({
       category_id: 3,
       type: 2
-    })
-      .then(res => {
+    }).then(
+      res => {
         if (res.items.length > 0) {
           this.image_jump = res.items[0].image;
           this.jump_url = res.items[0].jump_url;
         }
-      })
-      .catch(err => {
+      },
+      err => {
         this.$message.error(err.message);
-      });
-    Category()
-      .then(res => {
+      }
+    );
+    Category().then(
+      res => {
         let options2 = [];
         res.items.forEach(item => {
           let obj = {
@@ -112,10 +113,11 @@ export default {
           options2.push(obj);
         });
         this.options2 = options2;
-      })
-      .catch(err => {
+      },
+      err => {
         this.$message.error(err.message);
-      });
+      }
+    );
     this.getList();
   },
   methods: {
@@ -131,16 +133,17 @@ export default {
       if (this.value2 !== "") {
         params.category_id = this.value2;
       }
-      Works(params)
-        .then(res => {
+      Works(params).then(
+        res => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
           }
-        })
-        .catch(err => {
+        },
+        err => {
           this.$message.error(err.message);
-        });
+        }
+      );
     },
     selectchange() {
       this.getList();

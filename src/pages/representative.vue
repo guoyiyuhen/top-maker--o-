@@ -66,8 +66,8 @@ export default {
         designer_id: this.$route.params.id,
         page: this.page,
         page_size: this.size
-      })
-        .then(res => {
+      }).then(
+        res => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
@@ -75,10 +75,11 @@ export default {
               this.isListShow = false;
             }
           }
-        })
-        .catch(err => {
+        },
+        err => {
           this.$message.error(err.message);
-        });
+        }
+      );
     },
     currentChange(page) {
       this.page = page;

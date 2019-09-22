@@ -69,8 +69,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    Category()
-      .then(res => {
+    Category().then(
+      res => {
         let options = [];
         res.items.forEach(item => {
           let obj = {
@@ -80,10 +80,11 @@ export default {
           options.push(obj);
         });
         this.options = options;
-      })
-      .catch(err => {
+      },
+      err => {
         this.$message.error(err.message);
-      });
+      }
+    );
     this.getList();
   },
   methods: {
@@ -96,8 +97,8 @@ export default {
       if (this.value !== "") {
         params.category_id = this.value;
       }
-      Favors(params)
-        .then(res => {
+      Favors(params).then(
+        res => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
@@ -107,10 +108,11 @@ export default {
               this.isListShow = true;
             }
           }
-        })
-        .catch(err => {
+        },
+        err => {
           this.$message.error(err.message);
-        });
+        }
+      );
     },
     selectchange() {
       this.getList();
