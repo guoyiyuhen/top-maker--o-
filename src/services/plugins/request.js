@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import Vue from 'vue'
 axios.interceptors.request.use(config => {
     let token = localStorage.getItem('access_token');
     // let token = 'n4Xm1qU9IjxKtfD3SxLo1pb67rqKxiIk_1567149739';
@@ -25,7 +26,12 @@ let request = (option) => {
         axios[newoption.method](newoption.url, newoption.params).then(res => {
             resolve(res.data)
         }).catch((error) => {
-            console.log(error);
+            console.log(error.response);
+            if (error.response.status == 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('nickname');
+            }
+            reject(error.response);
         })
     })
 }

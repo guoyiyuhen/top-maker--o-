@@ -91,23 +91,31 @@ export default {
     Article({
       category_id: 3,
       type: 2
-    }).then(res => {
-      if (res.items.length > 0) {
-        this.image_jump = res.items[0].image;
-        this.jump_url = res.items[0].jump_url;
-      }
-    });
-    Category().then(res => {
-      let options2 = [];
-      res.items.forEach(item => {
-        let obj = {
-          value: item.id,
-          label: item.name
-        };
-        options2.push(obj);
+    })
+      .then(res => {
+        if (res.items.length > 0) {
+          this.image_jump = res.items[0].image;
+          this.jump_url = res.items[0].jump_url;
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.message);
       });
-      this.options2 = options2;
-    });
+    Category()
+      .then(res => {
+        let options2 = [];
+        res.items.forEach(item => {
+          let obj = {
+            value: item.id,
+            label: item.name
+          };
+          options2.push(obj);
+        });
+        this.options2 = options2;
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      });
     this.getList();
   },
   methods: {
@@ -123,12 +131,16 @@ export default {
       if (this.value2 !== "") {
         params.category_id = this.value2;
       }
-      Works(params).then(res => {
-        {
-          this.list = res.items;
-          this.total = res._meta.totalCount;
-        }
-      });
+      Works(params)
+        .then(res => {
+          {
+            this.list = res.items;
+            this.total = res._meta.totalCount;
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        });
     },
     selectchange() {
       this.getList();

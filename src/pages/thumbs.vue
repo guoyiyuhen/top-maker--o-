@@ -69,17 +69,21 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    Category().then(res => {
-      let options = [];
-      res.items.forEach(item => {
-        let obj = {
-          value: item.id,
-          label: item.name
-        };
-        options.push(obj);
+    Category()
+      .then(res => {
+        let options = [];
+        res.items.forEach(item => {
+          let obj = {
+            value: item.id,
+            label: item.name
+          };
+          options.push(obj);
+        });
+        this.options = options;
+      })
+      .catch(err => {
+        this.$message.error(err.message);
       });
-      this.options = options;
-    });
     this.getList();
   },
   methods: {
@@ -92,17 +96,21 @@ export default {
       if (this.value !== "") {
         params.category_id = this.value;
       }
-      Favors(params).then(res => {
-        {
-          this.list = res.items;
-          this.total = res._meta.totalCount;
-          if (res.items.length == 0) {
-            this.isListShow = false;
-          } else {
-            this.isListShow = true;
+      Favors(params)
+        .then(res => {
+          {
+            this.list = res.items;
+            this.total = res._meta.totalCount;
+            if (res.items.length == 0) {
+              this.isListShow = false;
+            } else {
+              this.isListShow = true;
+            }
           }
-        }
-      });
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        });
     },
     selectchange() {
       this.getList();

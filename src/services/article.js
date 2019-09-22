@@ -114,6 +114,15 @@ export let WebLogin = (params = {}) => {
     })
 }
 
+export let WebRegister = (params = {}) => {
+    let url = '/api/account/web-register';
+    return request({
+        url,
+        params,
+        method: 'post'
+    })
+}
+
 export let Logout = (params = {}) => {
     let url = '/api/account/logout';
     return request({

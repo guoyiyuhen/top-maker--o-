@@ -7,11 +7,11 @@
           :style="'background-image: url(' + item.image + ');'"
           @click="toPersonal(item.id)"
         >
-          <div class="box">
+          <!-- <div class="box">
             <h1 :style="item.theme_color == 1 ? 'color: #fff;' : ''">{{item.name}}</h1>
             <p :style="item.theme_color == 1 ? 'color: #fff;' : ''">标签：{{item.tags}}</p>
             <h2 :style="item.theme_color == 1 ? 'color: #fff;' : ''">{{item.signature}}</h2>
-          </div>
+          </div>-->
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -52,7 +52,13 @@
     </div>
     <div class="page-box">
       <div class="page-table">
-        <com-mpage :size="size" :total="total" :change="currentChange" :color="'#fff'" :color2="'#fbfbfb'"></com-mpage>
+        <com-mpage
+          :size="size"
+          :total="total"
+          :change="currentChange"
+          :color="'#fff'"
+          :color2="'#fbfbfb'"
+        ></com-mpage>
       </div>
     </div>
   </div>
@@ -93,20 +99,28 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    DesignerRecommend().then(res => {
-      this.swiper = res.items;
-    });
-    DesignrCategory().then(res => {
-      let options2 = [];
-      res.items.forEach(item => {
-        let obj = {
-          value: item.id,
-          label: item.name
-        };
-        options2.push(obj);
+    DesignerRecommend()
+      .then(res => {
+        this.swiper = res.items;
+      })
+      .catch(err => {
+        this.$message.error(err.message);
       });
-      this.options2 = options2;
-    });
+    DesignrCategory()
+      .then(res => {
+        let options2 = [];
+        res.items.forEach(item => {
+          let obj = {
+            value: item.id,
+            label: item.name
+          };
+          options2.push(obj);
+        });
+        this.options2 = options2;
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      });
     this.getList();
   },
   methods: {
@@ -122,12 +136,16 @@ export default {
       if (this.value2 !== "") {
         params.category_id = this.value2;
       }
-      Designer(params).then(res => {
-        {
-          this.list = res.items;
-          this.total = res._meta.totalCount;
-        }
-      });
+      Designer(params)
+        .then(res => {
+          {
+            this.list = res.items;
+            this.total = res._meta.totalCount;
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        });
     },
     selectchange() {
       this.getList();
