@@ -26,12 +26,12 @@ let request = (option) => {
         axios[newoption.method](newoption.url, newoption.params).then(res => {
             resolve(res.data)
         }).catch((error) => {
-            console.log(error.response);
+            console.log(error.response.data);
             if (error.response.status == 401) {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('nickname');
             }
-            reject(error.response);
+            reject(error.response.data);
         })
     })
 }

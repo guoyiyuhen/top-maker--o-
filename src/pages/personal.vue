@@ -43,16 +43,17 @@ export default {
   },
   created() {},
   mounted() {
-    Designer({}, this.$route.params.id)
-      .then(res => {
+    Designer({}, this.$route.params.id).then(
+      res => {
         {
           this.designer = res;
           this.isWhite = res.theme_color == 1 ? true : false;
         }
-      })
-      .catch(err => {
+      },
+      err => {
         this.$message.error(err.message);
-      });
+      }
+    );
     this.activeName = this.$route.name;
     if (this.$route.name == "personal") {
       this.$router.push({

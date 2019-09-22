@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="right">
-        <img class="detail-head" :src="designer.avatar" alt="">
+        <img class="detail-head" :src="designer.avatar" @click="todesigner" alt="">
         <h2>{{designer.name}}</h2>
         <p>标签：{{designer.tags}}</p>
         <div class="cmcc">
@@ -69,8 +69,8 @@ export default {
     getList() {
       let access_token = localStorage.getItem("access_token");
       if (access_token) {
-        Works({}, this.$route.params.id)
-          .then(res => {
+        Works({}, this.$route.params.id).then(
+          res => {
             {
               this.content = res.content;
               this.designer = res.designer;
@@ -78,17 +78,18 @@ export default {
               this.views = res.views;
               this.isfavor = res.isfavor;
             }
-          })
-          .catch(err => {
+          },
+          err => {
             if (err.status == 401) {
               this.getList();
               return;
             }
             this.$message.error(err.message);
-          });
+          }
+        );
       } else {
-        View2(this.$route.params.id)
-          .then(res => {
+        View2(this.$route.params.id).then(
+          res => {
             {
               this.content = res.content;
               this.designer = res.designer;
@@ -96,25 +97,26 @@ export default {
               this.views = res.views;
               this.isfavor = res.isfavor;
             }
-          })
-          .catch(err => {
+          },
+          err => {
             this.$message.error(err.message);
-          });
+          }
+        );
       }
     },
     changefavor(change) {
       let access_token = localStorage.getItem("access_token");
       if (access_token) {
         if (change) {
-          Dofavor({ works_id: this.$route.params.id })
-            .then(res => {
+          Dofavor({ works_id: this.$route.params.id }).then(
+            res => {
               this.$message({
                 message: "点赞成功",
                 type: "success"
               });
               this.getList();
-            })
-            .catch(err => {
+            },
+            err => {
               if (err.status == 401) {
                 this.$alert("请重新登陆", "登陆过期", {
                   confirmButtonText: "确定",
@@ -126,17 +128,18 @@ export default {
                 return;
               }
               this.$message.error(err.message);
-            });
+            }
+          );
         } else {
-          Undofavor({ works_id: this.$route.params.id })
-            .then(res => {
+          Undofavor({ works_id: this.$route.params.id }).then(
+            res => {
               this.$message({
                 message: "取消点赞",
                 type: "success"
               });
               this.getList();
-            })
-            .catch(err => {
+            },
+            err => {
               if (err.status == 401) {
                 this.$alert("请重新登陆", "登陆过期", {
                   confirmButtonText: "确定",
@@ -148,11 +151,17 @@ export default {
                 return;
               }
               this.$message.error(err.message);
-            });
+            }
+          );
         }
       } else {
         this.$message("请登陆");
       }
+    },
+    todesigner() {
+      this.$router.push({
+        path: '/representative/' + this.designer.id
+      })
     }
   }
 };
