@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel height="496px">
+    <el-carousel :height="imgHeight + 'px'">
       <el-carousel-item v-for="item in swiper" :key="item.id">
         <img class="swiper-img" :src="item.image" @click="toDetail(item)" alt="">
       </el-carousel-item>
@@ -41,7 +41,8 @@ export default {
     return {
       banIdx: 0,
       list: [],
-      swiper: []
+      swiper: [],
+      imgHeight: 0
     };
   },
   watch: {},
@@ -49,7 +50,7 @@ export default {
     clearInterval(timer);
   },
   mounted() {
-    this.imgWidth = window.innerWidth;
+    this.imgHeight = Math.floor(window.innerWidth / 2.7);
     Home().then(
       res => {
         this.swiper = res.banners;
@@ -70,10 +71,6 @@ export default {
     );
   },
   methods: {
-    bannertap(item) {
-      this.banIdx = item;
-      this.left = -item * this.imgWidth;
-    },
     toDetail(item) {
       if (item.type && item.type == 2) {
         location.href = item.jump_url;
@@ -116,21 +113,22 @@ export default {
     margin: 40px auto;
     overflow: hidden;
     .list {
-      width: 632px;
+      width: 600px;
       cursor: pointer;
-      height: 452px;
+      height: 552px;
       box-shadow: 2px 2px 6px 0px rgba(126, 126, 126, 0.3);
       float: left;
       margin: 8px;
       .list-img {
-        height: 307px;
-        width: 100%;
+        height: 400px;
+        width: 600px;
       }
       .list-content {
         overflow: hidden;
         padding: 40px 0 28px 28px;
         .list-left {
-          width: 450px;
+          width: 440px;
+          margin-right: 10px;
           float: left;
           h2 {
             font-size: 18px;

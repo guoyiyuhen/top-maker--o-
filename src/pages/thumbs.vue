@@ -15,15 +15,15 @@
     <div class="content" v-if="isListShow">
       <div class="list">
         <div class="box" v-for="(item,index) in list" :key="index" @click="toDetail(item.id)">
-          <img class="box-img" :src="item.thumb_image" alt="">
+          <img class="box-img" :src="item.thumb_image" alt />
           <div class="bottom">
             <h3>{{item.title}}</h3>
             <div>
-              <img class="img1" :src="item.designer.avatar" alt="">
+              <img class="img1" :src="item.designer.avatar" alt />
               <span>{{item.designer.name}}</span>
-              <img class="img2" src="./../assets/image/logo_no.png" alt="赞" title="赞">
+              <img class="img2" src="./../assets/image/logo_no.png" alt="赞" title="赞" />
               <span>{{item.favor_nums}}</span>
-              <img class="img3" src="./../assets/image/yanjing.png" alt="浏览" title="浏览">
+              <img class="img3" src="./../assets/image/yanjing.png" alt="浏览" title="浏览" />
               <span>{{item.views}}</span>
             </div>
           </div>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div v-else class="noList">
-      <img src="./../assets/image/zanwudianzan.png" alt="">
+      <img src="./../assets/image/zanwudianzan.png" alt />
       <h2>暂无点赞</h2>
       <div @click="toHome">去首页看看</div>
     </div>
@@ -53,7 +53,7 @@ import { Favors, Category } from "./../services/article";
 import comMpage from "@/components/pagination";
 export default {
   components: {
-    comMpage
+    comMpage,
   },
   data() {
     return {
@@ -63,25 +63,25 @@ export default {
       list: [],
       page: 1,
       total: 0,
-      size: 20
+      size: 20,
     };
   },
   watch: {},
   created() {},
   mounted() {
     Category().then(
-      res => {
+      (res) => {
         let options = [];
-        res.items.forEach(item => {
+        res.items.forEach((item) => {
           let obj = {
             value: item.id,
-            label: item.name
+            label: item.name,
           };
           options.push(obj);
         });
         this.options = options;
       },
-      err => {
+      (err) => {
         this.$message.error(err.message);
       }
     );
@@ -92,13 +92,13 @@ export default {
       let params = {
         page: this.page,
         page_size: this.size,
-        designer_id: this.$route.params.id
+        designer_id: this.$route.params.id,
       };
       if (this.value !== "") {
         params.category_id = this.value;
       }
       Favors(params).then(
-        res => {
+        (res) => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
@@ -109,7 +109,7 @@ export default {
             }
           }
         },
-        err => {
+        (err) => {
           this.$message.error(err.message);
         }
       );
@@ -123,15 +123,15 @@ export default {
     },
     toHome() {
       this.$router.push({
-        name: "home"
+        name: "home",
       });
     },
     toDetail(id) {
       this.$router.push({
-        path: "/detail/" + id
+        path: "/detail/" + id,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -215,6 +215,9 @@ export default {
           font-size: 14px;
           color: #3e3a39;
           font-weight: bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         div {
           height: 21px;

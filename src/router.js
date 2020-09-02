@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from './pages/main.vue';
+import Main from '@/pages/main.vue';
 Vue.use(Router);
 
 
@@ -20,7 +20,7 @@ const router = new Router({
                 { 
                     path: '/home',
                     name: 'home',
-                    component: () => import('./pages/home.vue'),
+                    component: () => import('@/pages/home.vue'),
                     meta: {
                         title: '精选'
                     }
@@ -28,7 +28,7 @@ const router = new Router({
                 { 
                     path: '/works',
                     name: 'works',
-                    component: () => import('./pages/works.vue'),
+                    component: () => import('@/pages/works.vue'),
                     meta: {
                         title: '作品'
                     }
@@ -36,7 +36,7 @@ const router = new Router({
                 {
                     path: '/designer',
                     name: 'designer',
-                    component: () => import('./pages/designer.vue'),
+                    component: () => import('@/pages/designer.vue'),
                     meta: {
                         title: '设计师'
                     }
@@ -44,7 +44,7 @@ const router = new Router({
                 {
                     path: '/detail/:id',
                     name: 'detail',
-                    component: () => import('./pages/detail.vue'),
+                    component: () => import('@/pages/detail.vue'),
                     meta: {
                         title: '作品详情'
                     }
@@ -52,7 +52,7 @@ const router = new Router({
                 {
                     path: '/personal/:id',
                     name: 'personal',
-                    component: () => import('./pages/personal.vue'),
+                    component: () => import('@/pages/personal.vue'),
                     meta: {
                         title: '设计师'
                     },
@@ -60,7 +60,7 @@ const router = new Router({
                         { 
                             path: '/representative/:id',
                             name: 'representative',
-                            component: () => import('./pages/representative.vue'),
+                            component: () => import('@/pages/representative.vue'),
                             meta: {
                                 title: '设计师'
                             }
@@ -68,7 +68,7 @@ const router = new Router({
                         { 
                             path: '/thumbs/:id',
                             name: 'thumbs',
-                            component: () => import('./pages/thumbs.vue'),
+                            component: () => import('@/pages/thumbs.vue'),
                             meta: {
                                 title: '设计师'
                             }
@@ -80,11 +80,4 @@ const router = new Router({
     ]
 })
 
-router.beforeEach((to, from, next) => {
-    // console.log(to);
-    // next({
-    //     name: 'home' // 跳转到home页
-    // })
-    next()
-})
 export default router

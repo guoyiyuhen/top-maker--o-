@@ -1,6 +1,6 @@
 <template>
   <div class="designer">
-    <el-carousel height="496px">
+    <el-carousel :height="imgHeight + 'px'">
       <el-carousel-item v-for="item in swiper" :key="item.id">
         <div
           class="banner"
@@ -93,12 +93,14 @@ export default {
       page: 1,
       total: 1,
       size: 6,
-      swiper: []
+      swiper: [],
+      imgHeight: 0
     };
   },
   watch: {},
   created() {},
   mounted() {
+    this.imgHeight = Math.floor(window.innerWidth / 2.7);
     DesignerRecommend()
       .then(res => {
         this.swiper = res.items;
@@ -158,7 +160,7 @@ export default {
     },
     toPersonal(id) {
       this.$router.push({
-        path: "/personal/" + id
+        path: "/representative/" + id
       });
     }
   }
@@ -283,7 +285,7 @@ export default {
         margin-top: 57px;
         img {
           float: left;
-          width: 232px;
+          width: 231px;
           height: 154px;
           margin-right: 4px;
         }

@@ -1,6 +1,6 @@
 <template>
   <div class="works">
-    <a :href="jump_url ? jump_url : 'http://www.baidu.com'">
+    <a :href="jump_url ? jump_url : ''">
       <img class="ad" :src="image_jump" alt="">
     </a>
     <div class="cascader">
@@ -200,17 +200,17 @@ export default {
     margin: 0 auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    width: 1140px;
+    width: 1125px;
     overflow: hidden;
     .box {
-      width: 274px;
+      width: 270px;
       cursor: pointer;
       float: left;
       margin: 5px;
       height: 261px;
       .box-img {
-        height: 186px;
-        width: 100%;
+        height: 180px;
+        width: 270px;
       }
       .bottom {
         height: 61px;
@@ -222,6 +222,9 @@ export default {
           font-size: 14px;
           color: #3e3a39;
           font-weight: bold;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
         div {
           height: 21px;

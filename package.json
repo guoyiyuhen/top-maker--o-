@@ -1,6 +1,6 @@
 {
-  "name": "xspace_h5",
-  "version": "0.1.0",
+  "name": "pc-hss",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,45 +8,62 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "ali-oss": "^6.3.1",
     "axios": "^0.18.0",
-    "blueimp-file-upload": "^9.28.0",
-    "element-ui": "^2.4.5",
-    "jquery": "^2.2.4",
-    "jquery-ui": "^1.12.1",
-    "noty": "^3.2.0-beta",
-    "popper.js": "^1.14.7",
-    "qs": "^6.6.0",
-    "quill": "^1.3.6",
-    "quill-image-upload": "^0.1.3",
-    "register-service-worker": "^1.5.2",
-    "v-uploader": "^1.8.0",
-    "vant": "^1.6.24",
-    "vue": "^2.5.22",
-    "vue-2-breadcrumbs": "^0.5.0",
-    "vue-bus": "^1.2.0",
-    "vue-i18n": "^8.8.1",
-    "vue-photo-preview": "^1.1.3",
-    "vue-quill-editor": "^3.0.6",
-    "vue-router": "^3.0.1",
-    "vuelidate": "^0.7.4",
-    "vuex": "^3.0.1",
-    "weixin-js-sdk": "^1.4.0-test"
+    "compression-webpack-plugin": "^3.0.0",
+    "crypto": "^1.0.1",
+    "default-passive-events": "^1.0.10",
+    "element-ui": "^2.12.0",
+    "node-sass": "^4.12.0",
+    "qs": "^6.7.0",
+    "sass": "^1.20.1",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.6.10",
+    "vue-axios": "^2.1.4",
+    "vue-router": "^3.0.6",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-eslint": "^3.4.0",
-    "@vue/cli-plugin-pwa": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
-    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
+    "babel-plugin-component": "^1.1.1",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^3.6.5",
+    "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.9.0",
-    "quill-image-upload": "^0.1.3",
-    "sass-loader": "^7.1.0",
-    "vue-cli-plugin-element": "^1.0.1",
+    "file-saver": "^2.0.2",
+    "js-sha1": "^0.6.0",
+    "nprogress": "^0.2.0",
+    "quill": "^1.3.7",
+    "script-loader": "^0.7.2",
+    "vue-quill-editor": "^3.0.6",
     "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.29.6",
-    "webpack-dev-server": "^3.2.1"
-  }
+    "webpack-dev-server": "^2.7.1",
+    "xlsx": "^0.15.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

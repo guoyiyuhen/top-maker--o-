@@ -1,4 +1,6 @@
-import '@babel/polyfill';
+import 'default-passive-events'
+import "core-js/stable"
+import "regenerator-runtime/runtime"
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
@@ -17,8 +19,6 @@ Vue.use(VueAxios,axios);
 
 axios.interceptors.request.use(
     config => {
-        //config.baseURL = '/api/api/';
-        // config.baseURL = process.env.NODE_ENV === 'production' ? '' : '';
         config.baseURL = '/';
         config.withCredentials = true; // 允许携带token ,这个是解决跨域产生的相关问题
         config.timeout = 6000;

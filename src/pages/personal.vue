@@ -34,11 +34,6 @@ export default {
   watch: {
     $route(route) {
       this.activeName = route.name;
-      if (this.$route.name == "personal") {
-        this.$router.push({
-          path: "/representative/" + this.$route.params.id
-        });
-      }
     }
   },
   created() {},
@@ -55,11 +50,6 @@ export default {
       }
     );
     this.activeName = this.$route.name;
-    if (this.$route.name == "personal") {
-      this.$router.push({
-        path: "/representative/" + this.$route.params.id
-      });
-    }
   },
   methods: {
     toRepresentative() {
