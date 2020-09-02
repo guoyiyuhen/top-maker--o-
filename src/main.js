@@ -9,6 +9,7 @@ import router from "./router"
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router'
+import store from './store'
 
 const routerPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
@@ -41,5 +42,6 @@ Vue.config.productionTip = false;
 import  './style/index.scss';
 new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app');

@@ -14,6 +14,11 @@ export default {
     },
     mounted(){
         console.log('版本号：v1.0.1');
+        let that = this;
+        that.$store.dispatch('set_width', window.innerWidth);
+        window.onresize = () => {
+            that.$store.dispatch('set_width', window.innerWidth);
+        }
     },
     methods: {
 

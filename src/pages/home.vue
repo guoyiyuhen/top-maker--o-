@@ -2,27 +2,27 @@
   <div class="home">
     <el-carousel :height="imgHeight + 'px'">
       <el-carousel-item v-for="item in swiper" :key="item.id">
-        <img class="swiper-img" :src="item.image" @click="toDetail(item)" alt="">
+        <img class="swiper-img" :src="item.image" @click="toDetail(item)" alt />
       </el-carousel-item>
     </el-carousel>
     <div class="box">
       <div class="list" v-for="(item,index) in list" :key="index" @click="toDetail(item)">
-        <img class="list-img" :src="item.thumb_image" alt="">
+        <img class="list-img" :src="item.thumb_image" alt />
         <div class="list-content">
           <div class="list-left">
             <h2>{{item.title}}</h2>
             <p>{{item.brief}}</p>
           </div>
           <div class="list-right">
-            <img class="list-head" :src="item.designer.avatar" alt="">
+            <img class="list-head" :src="item.designer.avatar" alt />
             <p>{{item.designer.name}}</p>
             <div class="follow">
               <div class="left">
-                <img src="./../assets/image/logo_no.png" alt="赞" title="赞">
+                <img src="./../assets/image/logo_no.png" alt="赞" title="赞" />
                 <span>{{item.favor_nums}}</span>
               </div>
               <div class="right">
-                <img src="./../assets/image/yanjing.png" alt="浏览" title="浏览">
+                <img src="./../assets/image/yanjing.png" alt="浏览" title="浏览" />
                 <span>{{item.views}}</span>
               </div>
             </div>
@@ -42,30 +42,33 @@ export default {
       banIdx: 0,
       list: [],
       swiper: [],
-      imgHeight: 0
     };
   },
   watch: {},
+  computed: {
+    imgHeight() {
+      return Math.floor(this.$store.state.width / 2.7); //需要监听的数据
+    },
+  },
   destroyed() {
     clearInterval(timer);
   },
   mounted() {
-    this.imgHeight = Math.floor(window.innerWidth / 2.7);
     Home().then(
-      res => {
+      (res) => {
         this.swiper = res.banners;
       },
-      err => {
+      (err) => {
         this.$message.error(err.message);
       }
     );
     Works({ is_good: 1 }).then(
-      res => {
+      (res) => {
         {
           this.list = res.items;
         }
       },
-      err => {
+      (err) => {
         this.$message.error(err.message);
       }
     );
@@ -76,11 +79,11 @@ export default {
         location.href = item.jump_url;
       } else {
         this.$router.push({
-          path: "/detail/" + item.id
+          path: "/detail/" + item.id,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

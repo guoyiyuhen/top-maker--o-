@@ -41,12 +41,12 @@
     <div class="list">
       <div class="box" v-for="(item, index) in list" :key="index" @click="toPersonal(item.id)">
         <div class="left">
-          <img :src="item.avatar" alt="">
+          <img :src="item.avatar" alt />
           <h2>{{item.name}}</h2>
           <p>标签：{{item.tags}}</p>
         </div>
         <div class="right">
-          <img :src="item2.image" alt="" v-for="(item2,index2) in item.works" :key="index2">
+          <img :src="item2.image" alt v-for="(item2,index2) in item.works" :key="index2" />
         </div>
       </div>
     </div>
@@ -67,24 +67,24 @@
 import {
   Designer,
   DesignrCategory,
-  DesignerRecommend
+  DesignerRecommend,
 } from "./../services/article";
 import comMpage from "@/components/pagination";
 export default {
   components: {
-    comMpage
+    comMpage,
   },
   data() {
     return {
       options1: [
         {
           value: "created_at",
-          label: "最新"
+          label: "最新",
         },
         {
           value: "favor_nums",
-          label: "最热"
-        }
+          label: "最热",
+        },
       ],
       options2: [],
       value: "",
@@ -94,33 +94,37 @@ export default {
       total: 1,
       size: 6,
       swiper: [],
-      imgHeight: 0
     };
   },
   watch: {},
+  computed: {
+    imgHeight() {
+      return Math.floor(this.$store.state.width / 2.7); //需要监听的数据
+    },
+  },
   created() {},
   mounted() {
     this.imgHeight = Math.floor(window.innerWidth / 2.7);
     DesignerRecommend()
-      .then(res => {
+      .then((res) => {
         this.swiper = res.items;
       })
-      .catch(err => {
+      .catch((err) => {
         this.$message.error(err.message);
       });
     DesignrCategory().then(
-      res => {
+      (res) => {
         let options2 = [];
-        res.items.forEach(item => {
+        res.items.forEach((item) => {
           let obj = {
             value: item.id,
-            label: item.name
+            label: item.name,
           };
           options2.push(obj);
         });
         this.options2 = options2;
       },
-      err => {
+      (err) => {
         this.$message.error(err.message);
       }
     );
@@ -130,7 +134,7 @@ export default {
     getList() {
       let params = {
         page: this.page,
-        page_size: this.size
+        page_size: this.size,
       };
       if (this.value !== "") {
         params.sort_name = this.value;
@@ -140,13 +144,13 @@ export default {
         params.category_id = this.value2;
       }
       Designer(params).then(
-        res => {
+        (res) => {
           {
             this.list = res.items;
             this.total = res._meta.totalCount;
           }
         },
-        err => {
+        (err) => {
           this.$message.error(err.message);
         }
       );
@@ -160,10 +164,10 @@ export default {
     },
     toPersonal(id) {
       this.$router.push({
-        path: "/representative/" + id
+        path: "/representative/" + id,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
