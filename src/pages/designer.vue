@@ -99,12 +99,11 @@ export default {
   watch: {},
   computed: {
     imgHeight() {
-      return Math.floor(this.$store.state.width / 2.7); //需要监听的数据
+      return Math.floor(this.$store.state.width / 3.7); //需要监听的数据
     },
   },
   created() {},
   mounted() {
-    this.imgHeight = Math.floor(window.innerWidth / 2.7);
     DesignerRecommend()
       .then((res) => {
         this.swiper = res.items;
