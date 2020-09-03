@@ -20,8 +20,10 @@ let request = (option) => {
     if (newoption.method === 'get') {
         newoption.url = newoption.url + '?' + qs.stringify(newoption.params);
     }
+    let upDateUrl = 'http://api.top.tmaker.com:80' + newoption.url;
+    
     return new Promise((resolve, reject) => {
-        axios[newoption.method](newoption.url, newoption.params).then(res => {
+        axios[newoption.method](upDateUrl, newoption.params).then(res => {
             resolve(res.data)
         }).catch((error) => {
             console.log(error.response.data);
